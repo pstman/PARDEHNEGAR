@@ -1,0 +1,68 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --color-parchment: #F5EEDB;
+    --color-parchment-dark: #E6D7BA;
+    --color-sepia: #3D2B1F;
+    --color-sepia-light: #594234;
+    --color-oxblood: #781D22;
+    --color-oxblood-bright: #9E2A2B;
+    --color-saffron: #D97706;
+    --color-saffron-gold: #E5A836;
+    --color-teal: #1E555C;
+    --color-teal-deep: #0F373D;
+  }
+}
+
+.font-cinzel {
+  font-family: 'Cinzel', serif;
+}
+
+.font-cormorant {
+  font-family: 'Cormorant Garamond', serif;
+}
+
+.font-body {
+  font-family: 'Vazirmatn', 'EB Garamond', 'Source Serif 4', serif, sans-serif;
+}
+
+.font-script {
+  font-family: 'Alex Brush', cursive;
+}
+
+.font-persian {
+  font-family: 'Vazirmatn', 'Noto Naskh Arabic', 'IranNastaliq', serif, sans-serif;
+}
+
+/* Aged Parchment Background Texture Effect */
+.bg-parchment-texture {
+  background-color: #f4ecdc;
+  background-image: 
+    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.45) 0%, rgba(226, 209, 179, 0.4) 60%, rgba(184, 158, 120, 0.7) 100%),
+    radial-gradient(ellipse at top left, rgba(214, 185, 140, 0.3) 0%, transparent 50%),
+    radial-gradient(ellipse at bottom right, rgba(160, 126, 85, 0.4) 0%, transparent 60%);
+}
+
+.bg-dark-parchment {
+  background-color: #1a1512;
+  background-image: 
+    radial-gradient(circle at 50% 50%, rgba(45, 34, 25, 0.6) 0%, rgba(24, 18, 14, 0.85) 70%, rgba(12, 9, 7, 0.98) 100%),
+    radial-gradient(ellipse at top, rgba(120, 29, 34, 0.12) 0%, transparent 60%);
+}
+
+/* Custom scrollbar for antique look */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #1e1814;
+}
+::-webkit-scrollbar-thumb {
+  background: #594234;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #8b2635;
+}

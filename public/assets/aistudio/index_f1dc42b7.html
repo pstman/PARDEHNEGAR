@@ -1,0 +1,3207 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>پرده‌نگار • سامانه جامع انطباق پیانو، ویولن و ردیف موسیقی ایرانی | اثر ایمان برزجان</title>
+
+  <!-- Entity SEO, Author & Knowledge Graph Meta Tags -->
+  <meta name="author" content="ایمان برزجان | Iman Barzjan">
+  <meta name="creator" content="ایمان برزجان | Iman Barzjan">
+  <meta name="description" content="پرده‌نگار؛ نرم‌افزار آموزشی تعاملی انطباق ۵۱ کلاویه پیانو با پهنه کامل ویولن، شبیه‌سازی ۱۲ دستگاه و آواز موسیقی ایرانی، دایره پنجم‌های تعاملی، ریزپرده‌های سری و کرن و کوک‌های ردیف. طراحی و پیاده‌سازی توسط ایمان برزجان با مشاوره علمی استاد بابک بختیاری.">
+  <meta name="keywords" content="پرده‌نگار, ایمان برزجان, Iman Barzjan, استاد بابک بختیاری, دایره پنجم ها, Circle of Fifths, آموزش ویولن, آموزش پیانو, ردیف موسیقی ایرانی, ۱۲ دستگاه و آواز, کوک ویولن, ریزپرده, سُری, کُرن">
+  <link rel="canonical" href="https://pstman.github.io/music-apps/">
+
+  <!-- Anti-Cache Directives: Prevents mobile browsers from freezing stale versions -->
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+
+  <!-- Schema.org JSON-LD Structured Data for Google Knowledge Graph -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Person",
+        "@id": "https://imanbarzjan.ir/#person",
+        "name": "ایمان برزجان",
+        "alternateName": ["Iman Barzjan", "pstman"],
+        "jobTitle": "نرم‌افزارنویس، طراح سامانه‌های آموزشی موسیقی و پژوهشگر",
+        "url": "https://imanbarzjan.ir",
+        "sameAs": [
+          "https://imanbarzjan.ir",
+          "https://github.com/pstman",
+          "https://www.youtube.com/@ImanBarzjan",
+          "https://www.instagram.com/iman_barzjan",
+          "https://t.me/imanbarzjanmusic"
+        ]
+      },
+      {
+        "@type": "Person",
+        "@id": "https://t.me/#advisor",
+        "name": "بابک بختیاری",
+        "alternateName": "استاد بابک بختیاری",
+        "jobTitle": "مدرس، نوازنده ویولن و مشاور علمی و هنری"
+      },
+      {
+        "@type": "SoftwareApplication",
+        "@id": "https://pstman.github.io/music-apps/#software",
+        "name": "پرده‌نگار",
+        "alternateName": "PardehNegar",
+        "applicationCategory": "EducationalApplication",
+        "operatingSystem": "All (Web, Android, iOS, Windows, macOS, Linux)",
+        "softwareVersion": "2.6.6",
+        "inLanguage": "fa",
+        "url": "https://pstman.github.io/music-apps/",
+        "author": { "@id": "https://imanbarzjan.ir/#person" },
+        "creator": { "@id": "https://imanbarzjan.ir/#person" },
+        "contributor": { "@id": "https://t.me/#advisor" },
+        "publisher": { "@type": "Organization", "name": "استودیو اینامیکس", "url": "https://t.me/" }
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    :root {
+      --bg-main: #f4f6fb;
+      --card-bg: #ffffff;
+      --card-border: #e2e8f0;
+      --card-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+      
+      --accent-primary: #b45309;
+      --accent-glow: #d97706;
+      --accent-soft: #fef3c7;
+      
+      /* رنگ‌های جدید و شیک برای درجات */
+      --color-shahed: #8b5cf6; /* بنفش لاجوردی جایگزین آبی قبلی */
+      --color-ist: #10b981;    /* سبز زمردی شیک‌تر */
+      --color-both: #0ea5e9;   /* آبی فیروزه‌ای برای حالت مشترک */
+
+      --text-dark: #0f172a;
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+
+      --white-w: 48px;
+      --white-h: 224px;
+      --black-w: 30px;
+      --black-h: 140px;
+      --safe-top: env(safe-area-inset-top, 0px);
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
+    }
+
+    @media (max-width: 640px) {
+      :root {
+        --white-w: 42px;
+        --white-h: 195px;
+        --black-w: 26px;
+        --black-h: 122px;
+      }
+    }
+
+    @media (max-height: 520px) and (orientation: landscape) {
+      :root {
+        --white-w: 38px;
+        --white-h: 155px;
+        --black-w: 24px;
+        --black-h: 96px;
+      }
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    body {
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      padding: calc(var(--safe-top) + 12px) 12px calc(var(--safe-bottom) + 24px);
+      min-height: 100vh;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .app-wrapper {
+      width: 100%;
+      max-width: 1200px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    svg {
+      display: inline-block;
+      vertical-align: middle;
+      flex-shrink: 0;
+    }
+
+    .icon-sm { width: 16px; height: 16px; }
+    .icon-md { width: 20px; height: 20px; }
+
+    .header-card {
+      background: #ffffff;
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      padding: 16px 18px;
+      text-align: center;
+      position: relative;
+      box-shadow: var(--card-shadow);
+    }
+
+    .header-badge-row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 8px;
+    }
+
+    .header-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 14px;
+      background: var(--accent-soft);
+      border: 1px solid #fde68a;
+      border-radius: 20px;
+      font-size: 12px;
+      color: var(--accent-primary);
+      font-weight: 800;
+    }
+
+    .version-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 12px;
+      background: #f3e8ff;
+      border: 1px solid #d8b4fe;
+      border-radius: 20px;
+      font-size: 11.5px;
+      color: #6b21a8;
+      font-weight: 800;
+    }
+
+    .main-title {
+      font-size: 21px;
+      font-weight: 900;
+      color: var(--text-dark);
+      margin-bottom: 12px;
+      letter-spacing: -0.4px;
+      line-height: 1.5;
+    }
+    .main-title span.brand-name {
+      color: var(--accent-primary);
+    }
+
+    .action-links-row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .app-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 9px;
+      font-size: 11.5px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.15s ease;
+      cursor: pointer;
+    }
+    .btn-author {
+      background: #f8fafc;
+      color: #334155;
+      border: 1px solid #cbd5e1;
+    }
+    .btn-author:hover {
+      background: #f1f5f9;
+      color: #0f172a;
+    }
+    .btn-advisor {
+      background: #f0fdf4;
+      color: #166534;
+      border: 1px solid #bbf7d0;
+    }
+    .btn-telegram {
+      background: #eff6ff;
+      color: #1d4ed8;
+      border: 1px solid #bfdbfe;
+    }
+    .btn-telegram:hover {
+      background: #dbeafe;
+    }
+
+    .category-tabs-container {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+      padding: 2px 0;
+    }
+    .category-tabs-container::-webkit-scrollbar { display: none; }
+
+    .category-tab-btn {
+      flex: 1;
+      min-width: 140px;
+      background: #ffffff;
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 10px 14px;
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      box-shadow: var(--card-shadow);
+      transition: all 0.16s ease;
+      white-space: nowrap;
+    }
+    .category-tab-btn:hover {
+      color: var(--text-dark);
+      border-color: #cbd5e1;
+    }
+    .category-tab-btn.active.persian-active {
+      background: #fffbeb;
+      border-color: #f59e0b;
+      color: #b45309;
+      box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.2);
+    }
+    .category-tab-btn.active.daramad-active {
+      background: #f3e8ff;
+      border-color: var(--color-shahed);
+      color: #6b21a8;
+      box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.2);
+    }
+    .category-tab-btn.active.classical-active {
+      background: #fdf4ff;
+      border-color: #a855f7;
+      color: #7e22ce;
+      box-shadow: 0 0 0 2px rgba(168, 85, 247, 0.2);
+    }
+
+    .control-panel {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      padding: 16px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      box-shadow: var(--card-shadow);
+    }
+
+    .control-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 12px;
+    }
+
+    .select-group {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .select-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 700;
+    }
+
+    select {
+      background: #f8fafc;
+      color: var(--text-dark);
+      border: 1px solid #cbd5e1;
+      border-radius: 9px;
+      padding: 10px 12px;
+      font-size: 13.5px;
+      font-weight: 600;
+      outline: none;
+      width: 100%;
+      transition: border 0.15s;
+    }
+    select:focus { 
+      border-color: var(--accent-glow); 
+      background: #ffffff;
+      box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.15);
+    }
+
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid #f1f5f9;
+      padding-top: 10px;
+    }
+
+    .control-pill-group {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-radius: 9px;
+      padding: 4px 10px;
+    }
+    .control-mini-label {
+      font-size: 11.5px;
+      font-weight: 800;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    .btn-gold {
+      background: linear-gradient(180deg, #f59e0b 0%, #d97706 100%);
+      color: #ffffff;
+      border: none;
+      font-weight: 800;
+      padding: 10px 16px;
+      border-radius: 10px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 13px;
+      box-shadow: 0 3px 12px rgba(217, 119, 6, 0.32);
+      transition: transform 0.1s ease;
+    }
+    .btn-gold:active { transform: scale(0.96); }
+
+    .btn-motif {
+      background: linear-gradient(180deg, #8b5cf6 0%, #6d28d9 100%);
+      color: #ffffff;
+      border: none;
+      font-weight: 800;
+      padding: 10px 16px;
+      border-radius: 10px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 13px;
+      box-shadow: 0 3px 12px rgba(139, 92, 246, 0.32);
+      transition: transform 0.1s ease;
+    }
+    .btn-motif:active { transform: scale(0.96); }
+
+    .btn-secondary {
+      background: #ffffff;
+      color: var(--text-main);
+      border: 1px solid #cbd5e1;
+      padding: 9px 15px;
+      border-radius: 9px;
+      font-size: 12.5px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
+      transition: all 0.15s ease;
+    }
+    .btn-secondary:hover {
+      background: #f8fafc;
+      border-color: #94a3b8;
+    }
+
+    .dastgah-info-badge {
+      display: none;
+      background: #f3e8ff;
+      border: 1px solid #d8b4fe;
+      border-right: 4px solid var(--color-shahed);
+      border-radius: 12px;
+      padding: 12px 14px;
+      font-size: 13px;
+      color: #5b21b6;
+      line-height: 1.65;
+    }
+
+    .circle-fifths-panel {
+      display: none;
+      background: linear-gradient(145deg, #090e17 0%, #1e293b 100%);
+      border: 2px solid #334155;
+      border-radius: 20px;
+      padding: 18px;
+      color: #f8fafc;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+      flex-direction: column;
+      gap: 16px;
+      position: relative;
+    }
+
+    .circle-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      border-bottom: 1px solid #334155;
+      padding-bottom: 12px;
+    }
+
+    .circle-main-stage {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+      align-items: center;
+    }
+    @media (min-width: 860px) {
+      .circle-main-stage {
+        grid-template-columns: 380px 1fr;
+      }
+    }
+
+    .wheel-viewport {
+      position: relative;
+      width: 350px;
+      height: 350px;
+      max-width: 100%;
+      min-height: 340px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      user-select: none;
+    }
+
+    .wheel-pointer {
+      position: absolute;
+      top: -3px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border-left: 10px solid transparent;
+      border-right: 10px solid transparent;
+      border-top: 16px solid #f59e0b;
+      z-index: 15;
+      filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.7));
+      pointer-events: none;
+    }
+
+    .svg-circle-wheel {
+      width: 100%;
+      height: 100%;
+      min-width: 330px;
+      min-height: 330px;
+      cursor: pointer;
+      filter: drop-shadow(0 6px 18px rgba(0,0,0,0.5));
+    }
+
+    .wheel-rotator {
+      transform-origin: 0px 0px;
+      transition: transform 0.65s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .wheel-slice {
+      cursor: pointer;
+      transition: filter 0.15s ease;
+    }
+    .wheel-slice:hover {
+      filter: brightness(1.3);
+    }
+
+    .circle-math-card {
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid #334155;
+      border-radius: 14px;
+      padding: 16px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .math-stat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 8px;
+    }
+
+    .math-stat-box {
+      background: #1e293b;
+      border: 1px solid #475569;
+      border-radius: 10px;
+      padding: 8px 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .math-stat-title {
+      font-size: 11px;
+      color: #94a3b8;
+      font-weight: 700;
+    }
+    .math-stat-value {
+      font-size: 14px;
+      font-weight: 900;
+      color: #a78bfa;
+    }
+
+    .circle-toolbox {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .btn-circle-action {
+      background: #1e293b;
+      color: #e2e8f0;
+      border: 1px solid #475569;
+      border-radius: 9px;
+      padding: 7px 12px;
+      font-size: 12px;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+    }
+    .btn-circle-action:hover {
+      background: #334155;
+      color: #ffffff;
+    }
+    .btn-circle-action.active-mode {
+      background: #6d28d9;
+      border-color: #a78bfa;
+      color: #ffffff;
+      box-shadow: 0 0 10px rgba(109, 40, 217, 0.5);
+    }
+
+    .violin-strings-row {
+      background: #fffbeb;
+      border: 1px solid #fde68a;
+      border-radius: 14px;
+      padding: 12px 14px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      font-size: 12.5px;
+      box-shadow: 0 2px 6px rgba(217, 119, 6, 0.05);
+    }
+    .violin-strings-row.persian-kook {
+      background: #f0fdf4;
+      border-color: #bbf7d0;
+    }
+    .violin-strings-row.classical-kook {
+      background: #eff6ff;
+      border-color: #bfdbfe;
+    }
+
+    .strings-title {
+      font-weight: 800;
+      color: var(--accent-primary);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .violin-strings-row.persian-kook .strings-title { color: #15803d; }
+    .violin-strings-row.classical-kook .strings-title { color: #1d4ed8; }
+
+    .string-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .btn-string {
+      background: #ffffff;
+      border: 1px solid #f59e0b;
+      color: #92400e;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 2px 4px rgba(217, 119, 6, 0.08);
+      transition: all 0.15s ease;
+    }
+    .btn-string:hover { background: #fef3c7; }
+    .violin-strings-row.persian-kook .btn-string { border-color: #22c55e; color: #166534; }
+    .violin-strings-row.classical-kook .btn-string { border-color: #3b82f6; color: #1e40af; }
+
+    .nav-controller {
+      background: #ffffff;
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 10px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      box-shadow: var(--card-shadow);
+    }
+
+    .nav-buttons-line {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .octave-tabs {
+      display: flex;
+      gap: 5px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+      padding: 2px 0;
+    }
+    .octave-tabs::-webkit-scrollbar { display: none; }
+
+    .btn-octave {
+      background: #f1f5f9;
+      color: #334155;
+      border: 1px solid #cbd5e1;
+      padding: 6px 11px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .btn-octave:hover {
+      background: #e2e8f0;
+      color: #0f172a;
+    }
+
+    .slider-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #f8fafc;
+      padding: 6px 12px;
+      border-radius: 10px;
+      border: 1px solid #e2e8f0;
+    }
+
+    .pos-slider {
+      width: 100%;
+      -webkit-appearance: none;
+      height: 7px;
+      background: #cbd5e1;
+      border-radius: 6px;
+      outline: none;
+    }
+    .pos-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--accent-glow);
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(217, 119, 6, 0.45);
+      border: 2px solid #ffffff;
+    }
+
+    .piano-wrapper {
+      background: #fdfefe;
+      border: 2px solid #cbd5e1;
+      border-radius: 16px;
+      padding: 34px 10px 24px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08), inset 0 2px 4px rgba(0, 0, 0, 0.02);
+      position: relative;
+      touch-action: none;
+      direction: ltr;
+    }
+
+    .piano-wrapper::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 14px;
+      background: linear-gradient(180deg, #991b1b 0%, #b91c1c 100%);
+      border-bottom: 2px solid #7f1d1d;
+      z-index: 5;
+    }
+
+    .piano-board {
+      position: relative;
+      height: var(--white-h);
+      margin: 0;
+      touch-action: none;
+    }
+
+    .key {
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
+      padding-bottom: 12px;
+      cursor: pointer;
+      border-radius: 0 0 6px 6px;
+      transition: background 0.12s, transform 0.06s, opacity 0.15s;
+      touch-action: none;
+    }
+    
+    .key:active, .key.pressed {
+      transform: translateY(4px);
+    }
+
+    /* استایل‌های جدید و شیک کلاویه سفید */
+    .white-key {
+      width: var(--white-w);
+      height: var(--white-h);
+      background: #ffffff;
+      border: 1px solid #94a3b8;
+      border-top: none;
+      z-index: 1;
+      color: #0f172a;
+      font-weight: 800;
+      box-shadow: inset 0 -4px 0 #cbd5e1, 0 4px 8px rgba(0, 0, 0, 0.08);
+    }
+    
+    .white-key.out-of-scale {
+      background: #e2e8f0 !important;
+      color: #94a3b8 !important;
+      border-color: #94a3b8 !important;
+      box-shadow: inset 0 -2px 0 #94a3b8 !important;
+      opacity: 0.45 !important;
+      cursor: not-allowed !important;
+      pointer-events: none !important;
+    }
+
+    .white-key.in-scale {
+      background: #fdf4ff;
+      box-shadow: inset 0 -4px 0 var(--accent-glow), 0 0 10px rgba(167, 139, 250, 0.2);
+      border-color: var(--accent-primary);
+      color: #4c1d95;
+    }
+    
+    .white-key.is-shahed {
+      background: #f3e8ff !important;
+      border-color: var(--color-shahed) !important;
+      box-shadow: inset 0 -5px 0 var(--color-shahed), 0 0 15px rgba(139, 92, 246, 0.4) !important;
+      color: #5b21b6 !important;
+    }
+    .white-key.is-ist {
+      background: #dcfce7 !important;
+      border-color: var(--color-ist) !important;
+      box-shadow: inset 0 -5px 0 var(--color-ist), 0 0 14px rgba(16, 185, 129, 0.45) !important;
+      color: #065f46 !important;
+    }
+    .white-key.is-shahed-and-ist {
+      background: #e0f2fe !important;
+      border-color: var(--color-both) !important;
+      box-shadow: inset 0 -5px 0 var(--color-both), 0 0 16px rgba(14, 165, 233, 0.55) !important;
+      color: #0369a1 !important;
+    }
+    .white-key.pressed {
+      background: #fcd34d !important;
+      color: #000 !important;
+    }
+
+    /* استایل‌های جدید و شیک کلاویه مشکی */
+    .black-key {
+      width: var(--black-w);
+      height: var(--black-h);
+      background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+      border: 1px solid #000000;
+      border-top: none;
+      z-index: 2;
+      color: #ffffff;
+      font-size: 10px;
+      font-weight: 800;
+      box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.5);
+    }
+    
+    .black-key.out-of-scale {
+      background: #64748b !important;
+      color: #cbd5e1 !important;
+      border-color: #475569 !important;
+      box-shadow: none !important;
+      opacity: 0.3 !important;
+      cursor: not-allowed !important;
+      pointer-events: none !important;
+    }
+
+    .black-key.in-scale {
+      background: linear-gradient(180deg, #6d28d9 0%, #4c1d95 100%);
+      border-color: var(--color-shahed);
+      color: #ede9fe;
+      box-shadow: 2px 4px 12px rgba(109, 40, 217, 0.4);
+    }
+    .black-key.is-shahed {
+      background: linear-gradient(180deg, #8b5cf6 0%, #6d28d9 100%) !important;
+      border-color: #a78bfa !important;
+      color: #ffffff !important;
+      box-shadow: 2px 4px 15px rgba(139, 92, 246, 0.5) !important;
+    }
+    .black-key.is-ist {
+      background: linear-gradient(180deg, #10b981 0%, #059669 100%) !important;
+      border-color: #34d399 !important;
+      color: #ffffff !important;
+      box-shadow: 2px 4px 12px rgba(16, 185, 129, 0.6) !important;
+    }
+    .black-key.is-shahed-and-ist {
+      background: linear-gradient(180deg, #0ea5e9 0%, #0284c7 100%) !important;
+      border-color: #38bdf8 !important;
+      color: #ffffff !important;
+      box-shadow: 2px 4px 14px rgba(14, 165, 233, 0.65) !important;
+    }
+    .black-key.pressed {
+      background: #f59e0b !important;
+      color: #000000 !important;
+    }
+
+    .key-badge {
+      font-size: 13.5px;
+      pointer-events: none;
+      font-weight: 800;
+      text-align: center;
+    }
+    .black-key .key-badge {
+      font-size: 10px;
+      text-align: center;
+      line-height: 1.15;
+    }
+
+    .micro-pill {
+      font-size: 10px;
+      padding: 1px 4px;
+      border-radius: 4px;
+      margin-top: 2px;
+      display: inline-block;
+      font-weight: 900;
+    }
+    .pill-koron {
+      background: #f3e8ff;
+      color: var(--color-shahed);
+      border: 1px solid #d8b4fe;
+    }
+
+    .violin-string-tag {
+      position: absolute;
+      top: -20px;
+      background: var(--accent-glow);
+      color: #ffffff;
+      font-size: 9.5px;
+      font-weight: 900;
+      padding: 1.5px 6px;
+      border-radius: 5px;
+      z-index: 3;
+      pointer-events: none;
+      box-shadow: 0 2px 5px rgba(217, 119, 6, 0.4);
+      white-space: nowrap;
+    }
+
+    .role-badge {
+      position: absolute;
+      bottom: 2px;
+      font-size: 8.5px;
+      font-weight: 900;
+      padding: 2px 5px;
+      border-radius: 4px;
+      pointer-events: none;
+      z-index: 4;
+      white-space: nowrap;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+    }
+    .role-shahed { background: var(--color-shahed); color: #ffffff; }
+    .role-ist { background: var(--color-ist); color: #ffffff; }
+    .role-both { background: var(--color-both); color: #ffffff; border: 1px solid #7dd3fc; }
+
+    .status-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12.5px;
+      padding: 6px 8px;
+      color: var(--text-muted);
+      font-weight: 600;
+      background: #ffffff;
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+    }
+    .status-legend {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 3px;
+    }
+    .status-active-note {
+      font-weight: 800;
+      color: var(--accent-primary);
+    }
+
+    .daramad-panel {
+      display: none;
+      background: #ffffff;
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      padding: 20px;
+      box-shadow: var(--card-shadow);
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .daramad-header {
+      border-bottom: 2px solid #f1f5f9;
+      padding-bottom: 12px;
+    }
+    .daramad-header h2 {
+      font-size: 17px;
+      font-weight: 900;
+      color: var(--accent-primary);
+      margin-bottom: 4px;
+    }
+
+    .daramad-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 14px;
+    }
+
+    .daramad-card {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 10px;
+      transition: transform 0.15s ease, border-color 0.15s ease;
+    }
+    .daramad-card:hover {
+      border-color: #cbd5e1;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+
+    .guide-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      padding: 20px 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      font-size: 14px;
+      line-height: 1.75;
+      box-shadow: var(--card-shadow);
+    }
+
+    .guide-section-title {
+      color: var(--accent-primary);
+      font-size: 16px;
+      font-weight: 900;
+      border-right: 4px solid var(--accent-glow);
+      padding-right: 10px;
+      margin-top: 4px;
+    }
+
+    .guide-box {
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-right: 4px solid var(--accent-glow);
+      border-radius: 10px;
+      padding: 12px 14px;
+      font-size: 13.5px;
+      color: var(--text-dark);
+    }
+
+    .table-container {
+      overflow-x: auto;
+      margin-top: 8px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    th, td {
+      border: 1px solid #cbd5e1;
+      padding: 8px 10px;
+      text-align: right;
+    }
+    th {
+      background: #f1f5f9;
+      font-weight: 800;
+      color: var(--text-dark);
+    }
+
+    footer {
+      text-align: center;
+      padding: 16px 8px;
+      font-size: 12.5px;
+      color: var(--text-muted);
+      border-top: 1px solid #e2e8f0;
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="app-wrapper">
+  
+  <header class="header-card">
+    <div class="header-badge-row">
+      <div class="header-badge">
+        <svg class="icon-sm" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+        </svg>
+        <span id="headerBadgeText">سامانه ۱۲ دستگاه و آواز ردیف ویولن ایران و پهنه کامل ساز (G3 تا A7)</span>
+      </div>
+
+      <div class="version-badge">
+        <span>نسخه ۲.۶.۷ (تعدیل رزونانس و طنین گرد ویولن)</span>
+      </div>
+    </div>
+
+    <h1 class="main-title" id="mainTitleHeading">
+      <span class="brand-name">«پرده‌نگار»</span> • <span id="mainTitleSub">انطباق نوت‌های موسیقی، ۱۲ دستگاه و آواز ایرانی بر پیانو و ویولن</span>
+    </h1>
+
+    <div class="action-links-row">
+      <a href="https://imanbarzjan.ir" target="_blank" rel="noopener noreferrer" class="app-btn btn-author">
+        <svg class="icon-md" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+        </svg>
+        <span>طراح و مؤلف: ایمان برزجان (imanbarzjan.ir)</span>
+      </a>
+
+      <div class="app-btn btn-advisor">
+        <svg class="icon-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 14l9-5-9-5-9 5 9 5z"/>
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"/>
+        </svg>
+        <span>مشاور علمی و هنری: استاد بابک بختیاری</span>
+      </div>
+
+      <a href="https://t.me/" target="_blank" rel="noopener noreferrer" class="app-btn btn-telegram">
+        <svg class="icon-md" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/>
+        </svg>
+  
+      </a>
+    </div>
+  </header>
+
+  <!-- 3 Pure Interactive Tabs -->
+  <div class="category-tabs-container">
+    <button id="tabPersian" class="category-tab-btn active persian-active" onclick="switchCategory('persian')">
+      <span>🇮🇷 ۱۲ دستگاه و آواز ردیف ویولن</span>
+    </button>
+    <button id="tabDaramad" class="category-tab-btn" onclick="switchCategory('daramad')">
+      <span>🎶 تالار درآمدها و پیش‌درآمدهای شاخص</span>
+    </button>
+    <button id="tabClassical" class="category-tab-btn" onclick="switchCategory('classical')">
+      <span>🎼 گام‌های دیاتونیک و دایره پنجم‌ها</span>
+    </button>
+  </div>
+
+  <section class="control-panel">
+    <div class="control-grid">
+      
+      <div class="select-group">
+        <label for="scaleSelect" class="select-label" id="scaleSelectLabel">انتخاب دستگاه یا آواز ایرانی:</label>
+        <select id="scaleSelect" onchange="applyScaleChange()"></select>
+      </div>
+
+      <div class="select-group">
+        <label for="accidentalMode" class="select-label">نمایش کلیدهای مشکی:</label>
+        <select id="accidentalMode" onchange="renderKeyLabels()">
+          <option value="auto">هوشمند (منطبق با گام/دستگاه)</option>
+          <option value="both">دیز و بمل هر دو (♯ / ♭)</option>
+          <option value="sharp">فقط دیز (♯)</option>
+          <option value="flat">فقط بمل (♭)</option>
+        </select>
+      </div>
+
+      <div class="select-group">
+        <label for="namingMode" class="select-label">سیستم نام‌گذاری:</label>
+        <select id="namingMode" onchange="renderKeyLabels()">
+          <option value="letter">الفبایی (C, D, E, F, G, A, B)</option>
+          <option value="solfege">سلفرژ (دو، ر، می، فا، سل، لا، سی)</option>
+        </select>
+      </div>
+
+    </div>
+
+    <div id="dastgahInfoBadge" class="dastgah-info-badge"></div>
+
+    <!-- Circle of Fifths Panel (For Classical Mode) -->
+    <div id="circleOfFifthsPanel" class="circle-fifths-panel">
+      <div class="circle-header-row">
+        <div style="display:flex; align-items:center; gap:8px;">
+          <span style="font-size:22px;">⚙️</span>
+          <div>
+            <h3 style="font-size:15px; font-weight:900; color:#a78bfa; margin:0;">دایره پنجم‌های تعاملی و مهندسی هارمونی (Circle of Fifths)</h3>
+            <p style="font-size:11.5px; color:#94a3b8; margin:0;">قانون ریاضی نسبت‌های ۳:۲ فیثاغورث، خوشه آکوردهای همسایه، و اتصال آنی به کلاویه‌ها</p>
+          </div>
+        </div>
+
+        <div class="circle-toolbox">
+          <button id="btnCircleFamily" class="btn-circle-action active-mode" onclick="toggleCircleMode('family')">
+            <span>📐 خوشه هارمونی (I - IV - V)</span>
+          </button>
+          <button id="btnCircleTritone" class="btn-circle-action" onclick="toggleCircleMode('tritone')">
+            <span>⚡ محور تریتون (۱۸۰°)</span>
+          </button>
+          <button class="btn-circle-action" onclick="spinCircleStep(1)">
+            <span>↻ پنجم بعد (+1♯)</span>
+          </button>
+          <button class="btn-circle-action" onclick="spinCircleStep(-1)">
+            <span>↺ چهارم بعد (+1♭)</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="circle-main-stage">
+        <div class="wheel-viewport" id="wheelViewport">
+          <div class="wheel-pointer"></div>
+          <svg id="svgFifthsWheel" class="svg-circle-wheel" viewBox="-200 -200 400 400" width="100%" height="100%">
+            <g id="wheelRotator" class="wheel-rotator"></g>
+          </svg>
+        </div>
+
+        <div class="circle-math-card">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+            <div style="font-weight:900; font-size:16px; color:#f59e0b;" id="circleSelectedTitle">دو ماژور (C Major)</div>
+            <button class="btn-gold" style="padding:7px 14px; font-size:12.5px;" onclick="playSelectedTonicChord()">
+              <span>▶ پخش آکورد پایگی (Triad)</span>
+            </button>
+          </div>
+
+          <div class="math-stat-grid">
+            <div class="math-stat-box">
+              <span class="math-stat-title">سرکلید (Key Signature):</span>
+              <span class="math-stat-value" id="circleStatAccidentals">بدون علامت (♮)</span>
+            </div>
+            <div class="math-stat-box">
+              <span class="math-stat-title">مینور نسبی (Relative Minor):</span>
+              <span class="math-stat-value" id="circleStatRelativeMinor">لا مینور (Am)</span>
+            </div>
+            <div class="math-stat-box">
+              <span class="math-stat-title">محور تریتون متضاد (Tritone):</span>
+              <span class="math-stat-value" id="circleStatTritone">F♯ / G♭ (۳ پرده)</span>
+            </div>
+            <div class="math-stat-box">
+              <span class="math-stat-title">فرمول ریاضی گام:</span>
+              <span class="math-stat-value">f × (3/2)ⁿ [پیچش فیثاغورث]</span>
+            </div>
+          </div>
+
+          <div style="background:#090e17; border-radius:10px; padding:10px; border:1px solid #1e293b; font-size:12.5px; color:#cbd5e1;" id="circleAnalysisDesc">
+            درجه ۱ (پایه): C | درجه ۴ (زیرنمایان): F | درجه ۵ (نمایان): G | مینورهای همسایه: Dm, Em, Am
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Playback & Export Buttons -->
+    <div class="btn-row">
+      <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
+        <button id="playScaleBtn" class="btn-gold" onclick="togglePlayScale()">
+          <svg class="icon-md" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M8 5v14l11-7z"/>
+          </svg>
+          <span id="playScaleLabel">پخش سریع رفت و برگشتی دستگاه (۱۰ ثانیه)</span>
+        </button>
+
+        <button id="playMotifBtn" class="btn-motif" onclick="playCurrentMotif()">
+          <svg class="icon-md" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+          </svg>
+          <span id="playMotifLabel">🎶 شنیدن تم شاخص درآمد</span>
+        </button>
+
+        <select id="soundTimbre" style="width: auto; padding: 9px 12px; font-size:13px; font-weight:700;">
+          <option value="piano">پیانو آکوستیک</option>
+          <option value="violin">ویولن سنتی با ویبراتو</option>
+        </select>
+
+        <!-- Articulation Selector (Legato/Glissando vs Staccato) -->
+        <div class="control-pill-group">
+          <span class="control-mini-label">آرتیکولاسیون:</span>
+          <select id="articulationMode" style="width:auto; padding:5px 8px; font-size:12.5px; font-weight:800; border:none; background:transparent; cursor:pointer;">
+            <option value="glissando" selected>گلیساندو / لگاتو (کشدار و متصل)</option>
+            <option value="staccato">استاکاتو (کوتاه، مقطع و ضربه‌ای)</option>
+          </select>
+        </div>
+
+        <div class="control-pill-group">
+          <span class="control-mini-label">تمپو:</span>
+          <select id="tempoSelector" style="width:auto; padding:5px 8px; font-size:12.5px; font-weight:800; border:none; background:transparent; cursor:pointer;">
+            <option value="60">۶۰ (آموزشی)</option>
+            <option value="120" selected>۱۲۰ (استاندارد)</option>
+            <option value="180">۱۸۰ (چابک)</option>
+          </select>
+        </div>
+      </div>
+
+      <div style="display:flex; gap:8px;">
+        <button class="btn-secondary" onclick="exportAnnotatedSnapshot()">
+          <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+          </svg>
+          <span>دانلود پوستر کامل پرده‌نگار (PNG)</span>
+        </button>
+
+        <button class="btn-secondary" onclick="toggleFullscreen()">
+          <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/>
+          </svg>
+          <span>تمام‌صفحه</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Violin Strings Bar -->
+  <div class="violin-strings-row" id="violinStringsRow">
+    <div class="strings-title" id="stringsTitle">
+      <span>🎻 کوک ۴ سیم ویولن:</span>
+    </div>
+    <div class="string-buttons" id="stringButtonsContainer"></div>
+  </div>
+
+  <!-- Octave & Navigation Bar -->
+  <div class="nav-controller">
+    <div class="nav-buttons-line">
+      <button class="btn-secondary" onclick="stepScroll(-300)" style="padding:7px 14px; font-size:12.5px;">
+        <span>▶ کلاویه‌های بم‌تر</span>
+      </button>
+
+      <div class="octave-tabs">
+        <button class="btn-octave" onclick="jumpToMidi(55)">اکتاو ۳ (بم)</button>
+        <button class="btn-octave" onclick="jumpToMidi(60)">اکتاو ۴ (میانی)</button>
+        <button class="btn-octave" onclick="jumpToMidi(72)">اکتاو ۵ (زیر)</button>
+        <button class="btn-octave" onclick="jumpToMidi(84)">اکتاو ۶ (اوج)</button>
+        <button class="btn-octave" onclick="jumpToMidi(96)">اکتاو ۷ (بالاترین)</button>
+      </div>
+
+      <button class="btn-secondary" onclick="stepScroll(300)" style="padding:7px 14px; font-size:12.5px;">
+        <span>کلاویه‌های زیرتر ◀</span>
+      </button>
+    </div>
+
+    <div class="slider-container">
+      <span style="font-size:12px; color:var(--text-muted); font-weight:700; white-space:nowrap;">نوار موقعیت:</span>
+      <input type="range" id="pianoSlider" class="pos-slider" min="0" max="100" value="0" oninput="onSliderDrag(this.value)">
+    </div>
+  </div>
+
+  <!-- Piano Keyboard Area -->
+  <div class="piano-wrapper" id="pianoViewport">
+    <div class="piano-board" id="pianoBoard"></div>
+  </div>
+
+  <!-- Status Bar -->
+  <div class="status-bar">
+    <div class="status-legend" id="statusBarLegend">
+      <span class="legend-item"><span class="legend-dot" style="background:var(--color-shahed);"></span> بنفش: نوت شاهد</span>
+      <span class="legend-item"><span class="legend-dot" style="background:var(--color-ist);"></span> سبز: نوت ایست</span>
+      <span class="legend-item"><span class="legend-dot" style="background:var(--color-both);"></span> فیروزه‌ای: هم شاهد و هم ایست</span>
+      <span class="legend-item"><span class="legend-dot" style="background:#cbd5e1; border:1px solid #94a3b8;"></span> مات: قفل ضدفالش</span>
+    </div>
+    <div id="statusActiveNote" class="status-active-note">آماده نواختن</div>
+  </div>
+
+  <!-- Tab 2 Panel: Daramad Gallery -->
+  <section id="daramadPanel" class="daramad-panel">
+    <div class="daramad-header">
+      <h2>🎶 تالار درآمدها، پیش‌درآمدها و موتیف‌های ماندگار ردیف</h2>
+      <p style="font-size:13px; color:#64748b; line-height:1.7;">
+        در موسیقی دستگاهی ایران، <strong>«درآمد»</strong> گوشه نخست و شناسنامه هر دستگاه است که فضا، نوت شاهد و ایست را در ریتم آزاد معرفی می‌کند؛ در حالی که <strong>«پیش‌درآمد»</strong> فرمی ضربی و منسجم (ابداع استاد غلامحسین درویش‌خان و رکن‌الدین مختاری) است که در آغاز اجرا برای آماده‌‌سازی ذهن شنونده و مرور گوشه‌های دستگاه نواخته می‌شود. روی هر کارت کلیک کنید تا موتیف شاخص همان دستگاه روی کلاویه‌ها به صدا درآید:
+      </p>
+    </div>
+
+    <div class="daramad-grid" id="daramadCardsContainer"></div>
+  </section>
+
+  <!-- Tab 1 Guide: Persian Dastgah Guide (Hidden when in Classical Mode) -->
+  <section id="persianGuideSection" class="guide-card">
+    <div class="guide-section-title">۱. شاکله جامع ۱۲ دستگاه و آواز ردیف ویولن ایران</div>
+    <p>
+      سامانه <strong>«پرده‌نگار»</strong> با نظارت علمی و هنری <strong>استاد بابک بختیاری</strong> و پدیدآوری <strong>ایمان برزجان</strong>، تمامی ۱۲ مقام رسمی ردیف ویولن ایران را بر مبنای اصل پایستگی خطابه نوت، گردش ملودی اصیل و کوک‌های دقیق ۴ سیم ساز (به ترتیب از سیم ۱ زیر به سیم ۴ بم) ساماندهی کرده است.
+    </p>
+
+    <div class="guide-section-title">۲. تفاوت بنیادین «درآمد» با «پیش‌درآمد» در مکتب موسیقی ایرانی</div>
+    <div class="guide-box">
+      <strong>درآمد (Daramad):</strong> بخش آوازی (غیرمتریک) و نخستین گوشه هر دستگاه که دانگ، نوت شاهد و ایست دستگاه را برای گوش شنونده تثبیت می‌کند.
+      <br><strong>پیش‌درآمد (Pishdaramad):</strong> قطعه‌ای ضربی و باشکوه در ریتم‌های وقارآمیز نظیر ۶/۴ یا ۴/۴ سنگین که آهنگساز در آغاز برنامه اجرا کرده و از گوشه‌های مهم دستگاه عبور کرده و دوباره به درآمد فرود می‌آید.
+    </div>
+
+    <div class="guide-section-title">۳. جدول مرجع کوک‌های ۴ سیم ویولن در ۱۲ دستگاه و آواز ردیف</div>
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>دستگاه / آواز</th>
+            <th>سرکلید و علامات ترکیبی</th>
+            <th>کوک سیم‌ها (از سیم ۱ به ۴)</th>
+            <th>شاهد / ایست</th>
+            <th>پیش‌درآمد و موتیف شاخص</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>۱. دستگاه شور «لا»</strong></td>
+            <td>سی کُرن (B𝄳)</td>
+            <td>می - لا - رِ - سل<br>رِ - لا - رِ - سل<br>رِ - لا - لا - سل</td>
+            <td>شاهد: لا (A4)<br>ایست: لا (A4)</td>
+            <td>پیش‌درآمد شور درویش‌‌خان / شهنازی</td>
+          </tr>
+          <tr>
+            <td><strong>۲. آواز دشتی «می»</strong></td>
+            <td>سی کُرن (B𝄳)</td>
+            <td>رِ - لا - رِ - لا</td>
+            <td>شاهد: لا (A4)<br>ایست: می (E4)</td>
+            <td>پیش‌درآمد دشتی موسی معروفی</td>
+          </tr>
+          <tr>
+            <td><strong>۳. آواز دشتی «سی»</strong></td>
+            <td>فا سُری (F𝄲)</td>
+            <td>می - لا - می - لا<br>می - لا - سی - سل</td>
+            <td>شاهد: می (E5)<br>ایست: سی (B4)</td>
+            <td>گردش دشتی در منطقه چپ‌کوک</td>
+          </tr>
+          <tr>
+            <td><strong>۴. آواز بیات اصفهان</strong></td>
+            <td>سی کُرن - دو دیز</td>
+            <td>می - لا - رِ - لا</td>
+            <td>شاهد: رِ (D5)<br>ایست: لا (A4)</td>
+            <td>پیش‌درآمد اصفهان مرتضی نی‌داوود</td>
+          </tr>
+          <tr>
+            <td><strong>۵. دستگاه همایون</strong></td>
+            <td>سی کُرن - دو دیز</td>
+            <td>رِ - لا - رِ - لا<br>رِ - لا - سی کُرن - فا سُری</td>
+            <td>شاهد: رِ (D5)<br>ایست: لا (A4)</td>
+            <td>پیش‌درآمد همایون رکن‌الدین مختاری</td>
+          </tr>
+          <tr>
+            <td><strong>۶. آواز بیات تُرک (زند)</strong></td>
+            <td>سی کُرن (B𝄳)</td>
+            <td>رِ - لا - دو - سل</td>
+            <td>شاهد: دو (C5)<br>ایست: فا (F4)</td>
+            <td>پیش‌درآمد بیات ترک درویش‌‌خان</td>
+          </tr>
+          <tr>
+            <td><strong>۷. آواز افشاری «رِ»</strong></td>
+            <td>سی کُرن (نوت متغیر: می)</td>
+            <td>رِ - لا - رِ - سل</td>
+            <td>شاهد: فا (F4)<br>ایست: رِ (D4)</td>
+            <td>گوشه قرایی: فا سُری | عراق: فا دیز و سی بمل</td>
+          </tr>
+          <tr>
+            <td><strong>۸. دستگاه سه‌گاه</strong></td>
+            <td>فا سُری - سی کُرن</td>
+            <td>می - لا - رِ - فا سُری</td>
+            <td>شاهد و ایست: فا سُری / می</td>
+            <td>پیش‌درآمد سه‌گاه رکن‌الدین مختاری</td>
+          </tr>
+          <tr>
+            <td><strong>۹. دستگاه چهارگاه «رِ»</strong></td>
+            <td>سی کُرن - دو دیز - می کُرن - فا دیز</td>
+            <td>رِ - لا - رِ - لا</td>
+            <td>شاهد و ایست: رِ (D4/D5)</td>
+            <td>پیش‌‌درآمد حماسی چهارگاه درویش‌خان</td>
+          </tr>
+          <tr>
+            <td><strong>۱۰. دستگاه نوا «رِ»</strong></td>
+            <td>سی کُرن (B𝄳)</td>
+            <td>رِ - لا - رِ - لا</td>
+            <td>شاهد و ایست: رِ (D4)</td>
+            <td>پیش‌درآمد متفکرانه نوا علی‌اکبر شهنازی</td>
+          </tr>
+          <tr>
+            <td><strong>۱۱. دستگاه راست‌پنجگاه</strong></td>
+            <td>فا دیز (F♯)</td>
+            <td>رِ - لا - رِ - سل</td>
+            <td>شاهد: فا دیز / سل</td>
+            <td>بستر پرده‌‌گردانی به تمام دستگاه‌ها</td>
+          </tr>
+          <tr>
+            <td><strong>۱۲. دستگاه ماهور (سل و رِ)</strong></td>
+            <td>ماهور سل: فا دیز<br>ماهور ر: فا دیز - دو دیز</td>
+            <td>ماهور سل: رِ - لا - رِ - سل<br>ماهور چپ: می - لا - رِ - لا</td>
+            <td>سل (G4) / رِ (D4)</td>
+            <td>پیش‌درآمد ماهور درویش‌خان</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Section 4: Academic Sources & Master Parviz Yahaghi School -->
+    <div class="guide-section-title">۴. کتاب‌شناسی، منابع مکتوب و سنت‌های اجرایی (مکتب استاد پرویز یاحقی)</div>
+    <div class="guide-box" style="background:#f8fafc; border-right-color:var(--color-shahed); line-height:1.8;">
+      جهت شفافیت علمی، کلیه نوت‌ها، تم‌های درآمدی و فواصل شبیه‌سازی‌شده در سامانه «پرده‌نگار» مستقیماً از روی معتبرترین مراجع ردیف‌شناسی مکتوب و سنت‌های فاخر ویولن ایران اخذ شده است:
+      <ul style="margin-top:8px; padding-right:18px; list-style-type:disc; font-size:13px; color:#334155;">
+        <li><strong>ردیف سازی و آوازی میرزا عبدالله (روایت نورعلی برومند):</strong> مرجع رسمی هسته‌های ملودیک، تثبیت دانگ‌ها، نوت شاهد و فرود درآمدهای اصیل.</li>
+        <li><strong>کتاب «بیست و چهار پیش‌درآمد» (تدوین و نت‌نگاری استاد فرامرز پایور):</strong> منبع تم‌های آغازین پیش‌درآمدهای تاریخی درویش‌خان، مرتضی نی‌داوود و رکن‌الدین مختاری.</li>
+        <li><strong>کتاب «سرگذشت موسیقی ایران» (استاد روح‌الله خالقی):</strong> مرجع مستند تاریخچه تحول فرم پیش‌‌درآمد از دوران قاجار و کنسرت‌های انجمن اخوّت.</li>
+        <li><strong>کتاب «ردیف هفت دستگاه موسیقی ایران» (موسی معروفی):</strong> مأخذ سنجش فواصل و ریزپرده‌های سُری و کُرن بر حسب سِنت.</li>
+        <li><strong>سنت‌های اجرایی و لحن‌شناسی «مکتب استاد پرویز یاحقی»:</strong>
+          کاربرد تخصصی واخوان‌های دوبل، استفاده بهینه از تشدید صدای سیم‌های جفت در کوک‌های خاص (مانند می-لا-ر-لا در اصفهان و ر-لا-ر-لا در دشتی و همایون) و گردش‌های درآمدی گیرا.
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Tab 3 Guide: Classical Theory Guide -->
+  <section id="classicalGuideSection" class="guide-card" style="display:none;">
+    <div class="guide-section-title">۱. ساختار گام‌های دیاتونیک، کلاویه‌ها و چیدمان نوت‌های موسیقی</div>
+    <div class="guide-box">
+      پیانو از تکرار الگوی منظم ۱۲ نیم‌پرده‌ای در قالب اکتاوها تشکیل شده است:
+      <br>• <strong>کلاویه‌های سفید (نوت‌های طبیعی / Natural):</strong> C, D, E, F, G, A, B (دو، ر، می، فا، سل، لا، سی)
+      <br>• <strong>کلاویه‌های مشکی (نیم‌پرده‌های کروماتیک):</strong> C♯/D♭, D♯/E♭, F♯/G♭, G♯/A♭, A♯/B♭
+      <br>• <strong>فرمول بنیادی گام‌های ماژور دیاتونیک:</strong> پرده - پرده - نیم‌پرده - پرده - پرده - پرده - نیم‌پرده (W-W-H-W-W-W-H)
+    </div>
+
+    <div class="guide-section-title">۲. چرا برای «می دیز (#E)» و «سی دیز (#B)» کلاویه مشکی مجزا نداریم؟</div>
+    <p>
+      فاصله‌بندی کلاویه‌های پیانو مبتنی بر نیم‌پرده‌های فیزیکی صوت است. بین اکثر نوت‌های مجاور سفید (مانند Do تا Re یا Fa تا Sol) فاصله <strong>یک پرده کامل</strong> است و یک کلاویه مشکی میان آن‌ها نیم‌پرده را تأمین می‌کند. اما فاصله طبیعی بین دو نوت <strong>E تا F (می تا فا)</strong> و همچنین <strong>B تا C (سی تا دو)</strong>، ذاتاً خودش <strong>نیم‌پرده</strong> است؛ بنابراین هیچ فضای فیزیکی بین آن‌ها وجود ندارد و این کلیدها مستقیماً به هم چسبیده‌اند.
+    </p>
+    <div class="guide-box" style="border-right-color:var(--color-shahed);">
+      <strong>مفهوم آن‌‌هارمونیک (مترادف صوتی):</strong> نوت <strong>#E (می دیز)</strong> یعنی نوت «می» را نیم‌پرده زیرتر کنیم که از نظر فیزیکی و فرکانسی دقیقاً همان کلاویه سفید <strong>F (فا)</strong> به صدا درمی‌آید. به همین شکل، نوت <strong>#B (سی دیز)</strong> دقیقاً همان کلید سفید <strong>C (دو)</strong> است.
+    </div>
+
+    <div class="guide-section-title">۳. چرا مستقیماً F یا C نمی‌نویسیم و از اصطلاح #E یا #B استفاده می‌کنیم؟</div>
+    <div class="guide-box" style="background:#fffbeb; border-right-color:#f59e0b; color:#78350f;">
+      📌 <strong>قانون توالی الفبایی در گام‌های دیاتونیک:</strong> در هر گام ماژور یا مینور ۷ نوتی، از هر یک از حروف هفت‌گانه الفبای موسیقی (A, B, C, D, E, F, G) <strong>دقیقاً باید یک‌بار</strong> استفاده شود؛ نه نام حرفی حذف می‌شود و نه نام هیچ حرفی دوبار تکرار می‌گردد.
+    </div>
+
+    <div class="guide-section-title">۴. کدام گام‌های دیاتونیک دارای نوت‌های #E یا #B هستند؟</div>
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>گام دیاتونیک</th>
+            <th>توالی درجات ۷ گانه</th>
+            <th>نوت آن‌هارمونیک</th>
+            <th>دلیل علمی عدم استفاده از نام طبیعی</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>فا دیز ماژور (F♯ Major)</strong></td>
+            <td>F♯ - G♯ - A♯ - B - C♯ - D♯ - <strong>E♯</strong></td>
+            <td><strong>E♯ (می دیز)</strong></td>
+            <td>اگر درجه ۷ را F بنامیم، نام F دو بار در گام تکرار شده و نام حرف E غایب می‌ماند.</td>
+          </tr>
+          <tr>
+            <td><strong>دو دیز مینور هارمونیک (C♯m)</strong></td>
+            <td>C♯ - D♯ - E - F♯ - G♯ - A - <strong>B♯</strong></td>
+            <td><strong>B♯ (سی دیز)</strong></td>
+            <td>درجه هفتم برای ساخت نوت محسوس (Leading Note) نیم‌پرده بالا می‌رود و B تبدیل به <strong>#B</strong> می‌شود.</td>
+          </tr>
+          <tr>
+            <td><strong>دو دیز ماژور (C♯ Major)</strong></td>
+            <td>C♯ - D♯ - <strong>E♯</strong> - F♯ - G♯ - A♯ - <strong>B♯</strong></td>
+            <td><strong>هم E♯ و هم B♯</strong></td>
+            <td>تمام ۷ نوت گام دیز دارند و هر دو نوت آن‌هارمونیک در گام حضور دارند.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="guide-section-title">۵. مهندسی دایره پنجم‌ها (Circle of Fifths) و نسبت‌های فیثاغورثی</div>
+    <p>
+      دایره پنجم‌ها ساعت ریاضی و هندسی موسیقی جهان است. حرکت در جهت عقربه‌های ساعت بر مبنای ضرب فرکانس در نسبت ۳:۲ (فاصله پنجم درست) است که در هر گام یک <strong>دیز (♯)</strong> به سرکلید می‌افزاید؛ و حرکت پادساعت‌گرد (نسبت ۴:۳ یا فاصله چهارم درست) در هر گام یک <strong>بمل (♭)</strong> به سرکلید اضافه می‌کند.
+    </p>
+
+    <div class="guide-section-title">۶. جدول مرجع ۱۲ گام ماژور، مینورهای نسبی و علامات سرکلید</div>
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>گام ماژور (پایه)</th>
+            <th>مینور نسبی (Relative Minor)</th>
+            <th>تعداد علامات سرکلید</th>
+            <th>ترتیب دیزها یا بمل‌ها</th>
+            <th>آکورد پایگی (Triad)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>C Major (دو)</strong></td><td>A Minor (لا مینور)</td><td>بدون علامت (Natural)</td><td>-</td><td>C - E - G</td></tr>
+          <tr><td><strong>G Major (سل)</strong></td><td>E Minor (می مینور)</td><td>۱ دیز (1♯)</td><td>F♯</td><td>G - B - D</td></tr>
+          <tr><td><strong>D Major (رِ)</strong></td><td>B Minor (سی مینور)</td><td>۲ دیز (2♯)</td><td>F♯, C♯</td><td>D - F♯ - A</td></tr>
+          <tr><td><strong>A Major (لا)</strong></td><td>F♯ Minor (فا دیز مینور)</td><td>۳ دیز (3♯)</td><td>F♯, C♯, G♯</td><td>A - C♯ - E</td></tr>
+          <tr><td><strong>E Major (می)</strong></td><td>C♯ Minor (دو دیز مینور)</td><td>۴ دیز (4♯)</td><td>F♯, C♯, G♯, D♯</td><td>E - G♯ - B</td></tr>
+          <tr><td><strong>B Major (سی)</strong></td><td>G♯ Minor (سل دیز مینور)</td><td>۵ دیز (5♯)</td><td>F♯, C♯, G♯, D♯, A♯</td><td>B - D♯ - F♯</td></tr>
+          <tr><td><strong>F♯ Major (فا دیز)</strong></td><td>D♯ Minor (ر دیز مینور)</td><td>۶ دیز (6♯)</td><td>F♯, C♯, G♯, D♯, A♯, <strong>E♯</strong></td><td>F♯ - A♯ - C♯</td></tr>
+          <tr><td><strong>D♭ Major (رِ بمل)</strong></td><td>B♭ Minor (سی بمل مینور)</td><td>۵ بمل (5♭)</td><td>B♭, E♭, A♭, D♭, G♭</td><td>D♭ - F - A♭</td></tr>
+          <tr><td><strong>A♭ Major (لا بمل)</strong></td><td>F Minor (فا مینور)</td><td>۴ بمل (4♭)</td><td>B♭, E♭, A♭, D♭</td><td>A♭ - C - E♭</td></tr>
+          <tr><td><strong>E♭ Major (می بمل)</strong></td><td>C Minor (دو مینور)</td><td>۳ بمل (3♭)</td><td>B♭, E♭, A♭</td><td>E♭ - G - B♭</td></tr>
+          <tr><td><strong>B♭ Major (سی بمل)</strong></td><td>G Minor (سل مینور)</td><td>۲ بمل (2♭)</td><td>B♭, E♭</td><td>B♭ - D - F</td></tr>
+          <tr><td><strong>F Major (فا)</strong></td><td>D Minor (رِ مینور)</td><td>۱ بمل (1♭)</td><td>B♭</td><td>F - A - C</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="guide-section-title">۷. هندسه خوشه هارمونی (I - IV - V) و محور تریتون</div>
+    <div class="guide-box" style="border-right-color:#2563eb;">
+      <strong>خوشه هارمونی همسایه:</strong> در هر گام، درجه ۴ (زیرنمایان / Subdominant) در فاصله یک پله پادساعت‌گرد و درجه ۵ (نمایان / Dominant) در فاصله یک پله ساعت‌گرد قرار دارد. به همراه مینورهای نسبی زیرین آن‌ها، ۶ آکورد اصلی هارمونی تنال را شکل می‌دهند.
+      <br><strong>محور تریتون (Tritone Axis):</strong> دو گام متضاد در زاویه ۱۸۰ درجه دایره نسبت به هم فاصله ۳ پرده کامل دارند که ناپایدارترین و پرکشش‌ترین فاصله فیزیکی صوت است و پایه مدولاسیون‌های هارمونیک است.
+    </div>
+
+    <div class="guide-section-title">۸. انطباق ۴ سیم ویولن با پیانو در استاندارد ارکسترال جهانی</div>
+    <div class="guide-box">
+      در موسیقی کلاسیک جهانی، کوک ۴ سیم ویولن بر مبنای فرکانس استاندارد دیاپازون بین‌المللی (A4 = 440 Hz) و فواصل پنجم درست است:
+      <br>• <strong>سیم ۴ (بم‌ترین نوت ساز):</strong> G3 (سل اکتاو ۳ - ۱۹۶ هرتز)
+      <br>• <strong>سیم ۳:</strong> D4 (رِ اکتاو ۴ - ۲۹۳.۶ هرتز)
+      <br>• <strong>سیم ۲:</strong> A4 (لا اکتاو ۴ - ۴۴۰ هرتز)
+      <br>• <strong>سیم ۱ (زیرترین سیم باز):</strong> E5 (می اکتاو ۵ - ۶۵۹.۲ هرتز)
+      <br>گستره صوتی کامل ۵۱ کلاویه پرده‌نگار، تمام پوزیسیون‌های اول تا هفتم ویولن کلاسیک (تا A7) را به صورت بی‌نقص پوشش می‌دهد.
+    </div>
+  </section>
+
+  <footer>
+    <p>نرم‌افزار جامع «پرده‌نگار» • آموزش انطباق نوت‌های پیانو، ویولن، دایره پنجم‌ها و ردیف موسیقی ایرانی (نسخه ۲.۶.۷ پایدار)</p>
+    <p style="margin-top:6px; font-weight:800; color:var(--accent-primary);">
+      طراح و مؤلف: ایمان برزجان (Iman Barzjan) | وب‌‌سایت: <a href="https://imanbarzjan.ir" target="_blank" rel="noopener noreferrer" style="color:var(--accent-primary); text-decoration:underline;">imanbarzjan.ir</a> | مشاور علمی: استاد بابک بختیاری  ()
+    </p>
+  </footer>
+
+</div>
+
+<script>
+const APP_VERSION = '2.6.7';
+
+// Auto Cache-Buster: Silently polls server and forces instant refresh if a new build is deployed
+(function autoBustCache() {
+  try {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('v') === APP_VERSION) return;
+
+    fetch(window.location.pathname + '?_bust=' + Date.now(), { cache: 'no-store' })
+      .then(res => res.text())
+      .then(freshHtml => {
+        const match = freshHtml.match(/const\s+APP_VERSION\s*=\s*['"]([^'"]+)['"]/);
+        if (match && match[1] && match[1] !== APP_VERSION) {
+          const freshUrl = new URL(window.location.href);
+          freshUrl.searchParams.set('v', match[1]);
+          window.location.replace(freshUrl.toString());
+        }
+      })
+      .catch(() => {});
+  } catch (e) {}
+})();
+
+const NOTE_NAMES = [
+  { natural: 'C', solfege: 'دو', isBlack: false },
+  { sharp: 'C♯', flat: 'D♭', solfegeSharp: 'دو دیز', solfegeFlat: 'ر بمل', isBlack: true },
+  { natural: 'D', solfege: 'ر', isBlack: false },
+  { sharp: 'D♯', flat: 'E♭', solfegeSharp: 'ر دیز', solfegeFlat: 'می بمل', isBlack: true },
+  { natural: 'E', solfege: 'می', isBlack: false },
+  { natural: 'F', solfege: 'فا', isBlack: false },
+  { sharp: 'F♯', flat: 'G♭', solfegeSharp: 'فا دیز', solfegeFlat: 'سل بمل', isBlack: true },
+  { natural: 'G', solfege: 'سل', isBlack: false },
+  { sharp: 'G♯', flat: 'A♭', solfegeSharp: 'سل دیز', solfegeFlat: 'لا بمل', isBlack: true },
+  { natural: 'A', solfege: 'لا', isBlack: false },
+  { sharp: 'A♯', flat: 'B♭', solfegeSharp: 'لا دیز', solfegeFlat: 'سی بمل', isBlack: true },
+  { natural: 'B', solfege: 'سی', isBlack: false }
+];
+
+const PERSIAN_DASTGAH_DATA = [
+  {
+    id: 'shor_la',
+    name: 'دستگاه شور «لا» (پایه ردیف ویولن ایران)',
+    isPersian: true,
+    notes: [9, 11, 0, 2, 4, 5, 7],
+    microCents: { 11: -45 },
+    microLabels: { 11: { letter: 'B𝄳 (سی کُرن)', solfege: 'سی کُرن' } },
+    shahedMidi: 69,
+    istMidi: 69,
+    shahedName: 'لا ۴ (A4)',
+    istName: 'لا ۴ (A4)',
+    kookViolin: [
+      { name: 'سیم ۱: E5 (می)', freq: 659.25, midi: 76 },
+      { name: 'سیم ۲: A4 (لا)', freq: 440.00, midi: 69 },
+      { name: 'سیم ۳: D4 (رِ)', freq: 293.66, midi: 62 },
+      { name: 'سیم ۴: G3 (سل)', freq: 196.00, midi: 55 }
+    ],
+    info: 'شور «لا»: سرکلید سی کُرن، بقیه نوت‌ها بکار. گردش نغمه و فرود شور حول نوت «لا». کوک‌های ۳‌گانه: می-لا-ر-سل، ر-لا-ر-سل، و ر-لا-لا-سل.',
+    pishdaramadTitle: 'پیش‌درآمد شور اثر درویش‌خان / شهنازی',
+    motifMelody: [
+      { midi: 69, dur: 0.6 }, { midi: 71, dur: 0.4 }, { midi: 72, dur: 0.5 },
+      { midi: 71, dur: 0.4 }, { midi: 69, dur: 0.7 }, { midi: 67, dur: 0.4 },
+      { midi: 69, dur: 1.0 }
+    ]
+  },
+  {
+    id: 'dashti_mi',
+    name: 'آواز دشتی «می» (متعلق به شور لا)',
+    isPersian: true,
+    notes: [9, 11, 0, 2, 4, 5, 7],
+    microCents: { 11: -45 },
+    microLabels: { 11: { letter: 'B𝄳 (سی کُرن)', solfege: 'سی کُرن' } },
+    shahedMidi: 69,
+    istMidi: 64,
+    shahedName: 'لا ۴ (A4)',
+    istName: 'می ۴ (E4)',
+    kookViolin: [
+      { name: 'سیم ۱: D5 (رِ)', freq: 587.33, midi: 74 },
+      { name: 'سیم ۲: A4 (لا)', freq: 440.00, midi: 69 },
+      { name: 'سیم ۳: D4 (رِ)', freq: 293.66, midi: 62 },
+      { name: 'سیم ۴: A3 (لا)', freq: 220.00, midi: 57 }
+    ],
+    info: 'دشتی «می»: سرکلید سی کُرن، بقیه نوت‌ها بکار. نوت شاهد روی لا ۴ و نوت ایست روی می ۴. کوک ۴ سیم: رِ - لا - رِ - لا.',
+    pishdaramadTitle: 'پیش‌درآمد دشتی موسی معروفی / درآمد دشتی صبا',
+    motifMelody: [
+      { midi: 69, dur: 0.5 }, { midi: 71, dur: 0.4 }, { midi: 72, dur: 0.6 },
+      { midi: 71, dur: 0.4 }, { midi: 69, dur: 0.5 }, { midi: 67, dur: 0.4 },
+      { midi: 65, dur: 0.4 }, { midi: 64, dur: 1.1 }
+    ]
+  },
+  {
+    id: 'dashti_si',
+    name: 'آواز دشتی «سی» (منطقه چپ‌کوک)',
+    isPersian: true,
+    notes: [4, 6, 7, 9, 11, 0, 2],
+    microCents: { 6: -30 },
+    microLabels: { 6: { letter: 'F𝄲 (فا سُری)', solfege: 'فا سُری' } },
+    shahedMidi: 76,
+    istMidi: 71,
+    shahedName: 'می ۵ (E5)',
+    istName: 'سی ۴ (B4)',
+    kookViolin: [
+      { name: 'سیم ۱: E5 (می)', freq: 659.25, midi: 76 },
+      { name: 'سیم ۲: A4 (لا)', freq: 440.00, midi: 69 },
+      { name: 'سیم ۳: E4 (می)', freq: 329.63, midi: 64 },
+      { name: 'سیم ۴: A3 (لا)', freq: 220.00, midi: 57 }
+    ],
+    info: 'دشتی «سی»: سرکلید فا سُری، بقیه نوت‌ها بکار. گردش ملودی در منطقه چپ‌کوک. کوک‌ها: می - لا - می - لا یا می - لا - سی - سل.',
+    pishdaramadTitle: 'تم درآمد دشتی چپ‌کوک',
+    motifMelody: [
+      { midi: 76, dur: 0.5 }, { midi: 78, dur: 0.4 }, { midi: 79, dur: 0.6 },
+      { midi: 78, dur: 0.4 }, { midi: 76, dur: 0.5 }, { midi: 74, dur: 0.4 },
+      { midi: 72, dur: 0.4 }, { midi: 71, dur: 1.1 }
+    ]
+  },
+  {
+    id: 'bayat_esfahan',
+    name: 'آواز بیات اصفهان',
+    isPersian: true,
+    notes: [9, 11, 1, 2, 4, 5, 8],
+    microCents: { 11: -45 },
+    microLabels: { 11: { letter: 'B𝄳 (سی کُرن)', solfege: 'سی کُرن' } },
+    shahedMidi: 74,
+    istMidi: 69,
+    shahedName: 'رِ ۵ (D5)',
+    istName: 'لا ۴ (A4)',
+    kookViolin: [
+      { name: 'سیم ۱: E5 (می)', freq: 659.25, midi: 76 },
+      { name: 'سیم ۲: A4 (لا)', freq: 440.00, midi: 69 },
+      { name: 'سیم ۳: D4 (رِ)', freq: 293.66, midi: 62 },
+      { name: 'سیم ۴: A3 (لا)', freq: 220.00, midi: 57 }
+    ],
+    info: 'بیات اصفهان: سرکلید سی کُرن و دو دیز. کوک ۴ سیم: می - لا - رِ - لا (E - A - D - A) با طنین واخوان لا.',
+    pishdaramadTitle: 'پیش‌درآمد اصفهان مرتضی نی‌داوود (شاهکار ردیف)',
+    motifMelody: [
+      { midi: 74, dur: 0.6 }, { midi: 73, dur: 0.4 }, { midi: 74, dur: 0.4 },
+      { midi: 76, dur: 0.6 }, { midi: 74, dur: 0.4 }, { midi: 73, dur: 0.4 },
+      { midi: 71, dur: 0.5 }, { midi: 69, dur: 1.2 }
+    ]
+  },
+  {
+    id: 'homayoun',
+    name: 'دستگاه همایون (و کوک استاد رضا محجوبی)',
+    isPersian: true,
+    notes: [9, 11, 1, 2, 4, 5, 7],
+    microCents: { 11: -45 },
+    microLabels: { 11: { letter: 'B𝄳 (سی کُرن)', solfege: 'سی کُرن' } },
+    shahedMidi: 74,
+    istMidi: 69,
+    shahedName: 'رِ ۵ (D5)',
+    istName: 'لا ۴ (A4)',
+    kookViolin: [
+      { name: 'سیم ۱: D5 (رِ)', freq: 587.33, midi: 74 },
+      { name: 'سیم ۲: A4 (لا)', freq: 440.00, midi: 69 },
+      { name: 'سیم ۳: D4 (رِ)', freq: 293.66, midi: 62 },
+      { name: 'سیم ۴: A3 (لا)', freq: 220.00, midi: 57 }
+    ],
+    info: 'دستگاه همایون: سرکلید سی کُرن و دو دیز. کوک عمومی: رِ - لا - رِ - لا. کوک استاد رضا محجوبی: رِ - لا - سی کُرن - فا سُری (سیم ۴ فا سُری).',
+    pishdaramadTitle: 'پیش‌درآمد همایون رکن‌الدین مختاری',
+    motifMelody: [
+      { midi: 74, dur: 0.5 }, { midi: 73, dur: 0.4 }, { midi: 71, dur: 0.4 },
+      { midi: 73, dur: 0.5 }, { midi: 74, dur: 0.5 }, { midi: 73, dur: 0.4 },
+      { midi: 71, dur: 0.5 }, { midi: 69, dur: 1.1 }
+    ]
+  },
+  {
+    id: 'bayat_tork',
+    name: 'آواز بیات تُرک (زند)',
+    isPersian: true,
+    notes: [0, 2, 4, 5, 7, 9, 11],
+    microCents: { 11: -45 },
+    microLabels: { 11: { letter: 'B𝄳 (سی کُرن)', solfege: 'سی کُرن' } },
+    shahedMidi: 65,
+    istMidi: 60,
+    shahedName: 'فا ۴ (F4)',
+    istName: 'دو ۴ (C4)',
+    kookViolin: [
+      { name: 'سیم ۱: D5 (رِ)', freq: 587.33, midi: 74 },
+      { name: 'سیم ۲: A4 (لا)', freq: 440.00, midi: 69 },
+      { name: 'سیم ۳: C4 (دو)', freq: 261.63, midi: 60 },
+      { name: 'سیم ۴: G3 (سل)', freq: 196.00, midi: 55 }
+    ],
+    info: 'بیات تُرک: سرکلید سی کُرن. کوک ۴ سیم: رِ - لا - دو - سل.',
+    pishdaramadTitle: 'پیش‌درآمد بیات ترک اثر درویش‌خان',
+    motifMelody: [
+      { midi: 65, dur: 0.5 }, { midi: 67, dur: 0.4 }, { midi: 69, dur: 0.5 },
+      { midi: 71, dur: 0.4 }, { midi: 69, dur: 0.4 }, { midi: 67, dur: 0.4 },
+      { midi: 65, dur: 0.5 }, { midi: 62, dur: 0.4 }, { midi: 60, dur: 1.1 }
+    ]
+  },
+  {
+    id: 'afshari_re',
+    name: 'آواز افشاری «رِ»',
+    isPersian: true,
+    notes: [2, 4, 5, 7, 9, 11, 0],
+    microCents: { 11: -45, 4: -45 },
+    microLabels: {
+      11: { letter: 'B𝄳 (سی کُرن)', solfege: 'سی کُرن' },
+      4: { letter: 'E𝄳/E (نوت متغیر)', solfege: 'می متغیر' }
+    },
+    shahedMidi: 65,
+    istMidi: 62,
+    shahedName: 'فا ۴ (F4)',
+    istName: 'رِ ۴ (D4)',
+    kookViolin: [
+      { name: 'سیم ۱: D5 (رِ)', freq: 587.33, midi: 74 },
+      { name: 'سیم ۲: A4 (لا)', freq: 440.00, midi: 69 },
+      { name: 'سیم ۳: D4 (رِ)', freq: 293.66, midi: 62 },
+      { name: 'سیم ۴: G3 (سل)', freq: 196.00, midi: 55 }
+    ],
+    info: 'افشاری «رِ»: سرکلید سی کُرن. نوت متغیر «می». گوشه قرایی: فا سُری | عراق: فا دیز و سی بمل. کوک: رِ - لا - رِ - سل.',
+    pishdaramadTitle: 'پیش‌درآمد افشاری اثر موسی معروفی',
+    motifMelody: [
+      { midi: 65, dur: 0.5 }, { midi: 67, dur: 0.4 }, { midi: 65, dur: 0.4 },
+      { midi: 64, dur: 0.5 }, { midi: 62, dur: 0.5 }, { midi: 60, dur: 0.4 },
+      { midi: 62, dur: 1.1 }
+    ]
+  },
+  {
+    id: 'segah',
+    name: 'دستگاه سه‌گاه',
+    isPersian: true,
+    notes: [6, 7, 9, 11, 0, 2, 4],
+    microCents: { 6: -30, 11: -45 },
+    microLabels: {
+      6: { letter: 'F𝄲 (فا سُری)', solfege: 'فا سُری' },
+      11: { letter: 'B𝄳 (سی کُرن)', solfege: 'سی کُرن' }
+    },
+    shahedMidi: 66,
+    istMidi: 66,
+    shahedName: 'فا سُری (قطب سه‌گاه)',
+    istName: 'فا سُری (F𝄲)',
+    kookViolin: [
+      { name: 'سیم ۱: E5 (می)', freq: 659.25, midi: 76 },
+      { name: 'سیم ۲: A4 (لا)', freq: 440.00, midi: 69 },
+      { name: 'سیم ۳: D4 (رِ)', freq: 293.66, midi: 62 },
+      { name: 'سیم ۴: F𝄲3 (فا سُری بم)', freq: 180.20, midi: 54 }
+    ],
+    info: 'دستگاه سه‌‌گاه: فا سُری و سی کُرن. سیم چهارم روی قطب سه‌گاه فا سُری. کوک: می - لا - رِ - فا سُری.',
+    pishdaramadTitle: 'پیش‌درآمد سه‌‌گاه رکن‌الدین مختاری',
+    motifMelody: [
+      { midi: 66, dur: 0.5 }, { midi: 67, dur: 0.4 }, { midi: 69, dur: 0.5 },
+      { midi: 71, dur: 0.5 }, { midi: 69, dur: 0.4 }, { midi: 67, dur: 0.4 },
+      { midi: 66, dur: 1.2 }
+    ]
+  },
+  {
+    id: 'chahargah_re',
+    name: 'دستگاه چهارگاه «رِ»',
+    isPersian: true,
+    notes: [2, 4, 6, 7, 9, 11, 1],
+    microCents: { 4: -45, 11: -45 },
+    microLabels: {
+      4: { letter: 'E𝄳 (می کُرن)', solfege: 'می کُرن' },
+      11: { letter: 'B𝄳 (سی کُرن)', solfege: 'سی کُرن' }
+    },
+    shahedMidi: 62,
+    istMidi: 62,
+    shahedName: 'رِ ۴ (D4)',
+    istName: 'رِ ۴ (D4)',
+    kookViolin: [
+      { name: 'سیم ۱: D5 (رِ)', freq: 587.33, midi: 74 },
+      { name: 'سیم ۲: A4 (لا)', freq: 440.00, midi: 69 },
+      { name: 'سیم ۳: D4 (رِ)', freq: 293.66, midi: 62 },
+      { name: 'سیم ۴: A3 (لا)', freq: 220.00, midi: 57 }
+    ],
+    info: 'چهارگاه «رِ» در ردیف دوم صبا: سی کُرن، دو دیز، می کُرن، فا دیز. تونیک روی رِ. کوک: رِ - لا - رِ - لا.',
+    pishdaramadTitle: 'پیش‌درآمد پرشکوه چهارگاه درویش‌خان',
+    motifMelody: [
+      { midi: 62, dur: 0.6 }, { midi: 64, dur: 0.4 }, { midi: 66, dur: 0.5 },
+      { midi: 67, dur: 0.5 }, { midi: 66, dur: 0.4 }, { midi: 64, dur: 0.4 },
+      { midi: 62, dur: 1.1 }
+    ]
+  },
+  {
+    id: 'nava_re',
+    name: 'دستگاه نوا «رِ»',
+    isPersian: true,
+    notes: [2, 4, 5, 7, 9, 11, 0],
+    microCents: { 11: -45 },
+    microLabels: { 11: { letter: 'B𝄳 (سی کُرن)', solfege: 'سی کُرن' } },
+    shahedMidi: 62,
+    istMidi: 62,
+    shahedName: 'رِ ۴ (D4)',
+    istName: 'رِ ۴ (D4)',
+    kookViolin: [
+      { name: 'سیم ۱: D5 (رِ)', freq: 587.33, midi: 74 },
+      { name: 'سیم ۲: A4 (لا)', freq: 440.00, midi: 69 },
+      { name: 'سیم ۳: D4 (رِ)', freq: 293.66, midi: 62 },
+      { name: 'سیم ۴: A3 (لا)', freq: 220.00, midi: 57 }
+    ],
+    info: 'نوا «رِ»: سرکلید سی کُرن. کوک: رِ - لا - رِ - لا.',
+    pishdaramadTitle: 'پیش‌درآمد نوا علی‌اکبر شهنازی',
+    motifMelody: [
+      { midi: 62, dur: 0.5 }, { midi: 64, dur: 0.4 }, { midi: 65, dur: 0.5 },
+      { midi: 67, dur: 0.5 }, { midi: 65, dur: 0.4 }, { midi: 64, dur: 0.4 },
+      { midi: 62, dur: 1.2 }
+    ]
+  },
+  {
+    id: 'rast_panjgah',
+    name: 'دستگاه راست‌پنجگاه',
+    isPersian: true,
+    notes: [7, 9, 11, 0, 2, 4, 6],
+    sharpPref: true,
+    shahedMidi: 67,
+    istMidi: 67,
+    shahedName: 'سل ۴ (G4)',
+    istName: 'سل ۴ (G4)',
+    kookViolin: [
+      { name: 'سیم ۱: D5 (رِ)', freq: 587.33, midi: 74 },
+      { name: 'سیم ۲: A4 (لا)', freq: 440.00, midi: 69 },
+      { name: 'سیم ۳: D4 (رِ)', freq: 293.66, midi: 62 },
+      { name: 'سیم ۴: G3 (سل)', freq: 196.00, midi: 55 }
+    ],
+    info: 'راست‌پنجگاه: سرکلید فا دیز. بستر پرده‌گردانی به سایر مایه‌ها. کوک: رِ - لا - رِ - سل.',
+    pishdaramadTitle: 'پیش‌درآمد راست‌پنجگاه درویش‌خان',
+    motifMelody: [
+      { midi: 67, dur: 0.5 }, { midi: 69, dur: 0.4 }, { midi: 71, dur: 0.5 },
+      { midi: 72, dur: 0.5 }, { midi: 74, dur: 0.5 }, { midi: 72, dur: 0.4 },
+      { midi: 71, dur: 0.4 }, { midi: 67, dur: 1.1 }
+    ]
+  },
+  {
+    id: 'mahoor_sol',
+    name: 'دستگاه ماهور «سل»',
+    isPersian: true,
+    notes: [7, 9, 11, 0, 2, 4, 6],
+    sharpPref: true,
+    shahedMidi: 67,
+    istMidi: 67,
+    shahedName: 'سل ۴ (G4)',
+    istName: 'سل ۴ (G4)',
+    kookViolin: [
+      { name: 'سیم ۱: D5 (رِ)', freq: 587.33, midi: 74 },
+      { name: 'سیم ۲: A4 (لا)', freq: 440.00, midi: 69 },
+      { name: 'سیم ۳: D4 (رِ)', freq: 293.66, midi: 62 },
+      { name: 'سیم ۴: G3 (سل)', freq: 196.00, midi: 55 }
+    ],
+    info: 'ماهور «سل»: سرکلید فا دیز. کوک: رِ - لا - رِ - سل.',
+    pishdaramadTitle: 'پیش‌‌درآمد ماهور درویش‌خان',
+    motifMelody: [
+      { midi: 67, dur: 0.5 }, { midi: 69, dur: 0.4 }, { midi: 71, dur: 0.5 },
+      { midi: 72, dur: 0.5 }, { midi: 71, dur: 0.4 }, { midi: 69, dur: 0.4 },
+      { midi: 67, dur: 1.1 }
+    ]
+  },
+  {
+    id: 'mahoor_chap_re',
+    name: 'دستگاه ماهور چپ (ماهور «رِ» ماژور)',
+    isPersian: true,
+    notes: [2, 4, 6, 7, 9, 11, 1],
+    sharpPref: true,
+    shahedMidi: 62,
+    istMidi: 62,
+    shahedName: 'رِ ۴ (D4)',
+    istName: 'رِ ۴ (D4)',
+    kookViolin: [
+      { name: 'سیم ۱: E5 (می)', freq: 659.25, midi: 76 },
+      { name: 'سیم ۲: A4 (لا)', freq: 440.00, midi: 69 },
+      { name: 'سیم ۳: D4 (رِ)', freq: 293.66, midi: 62 },
+      { name: 'سیم ۴: A3 (لا)', freq: 220.00, midi: 57 }
+    ],
+    info: 'ماهور چپ (ماهور «رِ» ماژور): سرکلید فا دیز و دو دیز. کوک: می - لا - رِ - لا.',
+    pishdaramadTitle: 'تم درآمد ماهور چپ‌کوک',
+    motifMelody: [
+      { midi: 62, dur: 0.5 }, { midi: 64, dur: 0.4 }, { midi: 66, dur: 0.5 },
+      { midi: 67, dur: 0.5 }, { midi: 66, dur: 0.4 }, { midi: 64, dur: 0.4 },
+      { midi: 62, dur: 1.1 }
+    ]
+  }
+];
+
+const CLASSICAL_SCALES_DATA = [
+  { id: 'c_maj', name: 'دو ماژور / لا مینور (C Major - بدون علامت)', notes: [0,2,4,5,7,9,11], sharpPref: true, tonicMidi: 60, triadMidi: [60, 64, 67], formula: 'پ - پ - ن - پ - پ - پ - ن', relMinor: 'A Minor (لا مینور)', sigDesc: 'بدون دیز و بمل (Natural)' },
+  { id: 'g_maj', name: 'سل ماژور (G Major - ۱ دیز: F♯)', notes: [7,9,11,0,2,4,6], sharpPref: true, tonicMidi: 67, triadMidi: [67, 71, 74], formula: 'پ - پ - ن - پ - پ - پ - ن', relMinor: 'E Minor (می مینور)', sigDesc: '۱ دیز: فا دیز (F♯)' },
+  { id: 'd_maj', name: 'ر ماژور (D Major - ۲ دیز: F♯, C♯)', notes: [2,4,6,7,9,11,1], sharpPref: true, tonicMidi: 62, triadMidi: [62, 66, 69], formula: 'پ - پ - ن - پ - پ - پ - ن', relMinor: 'B Minor (سی مینور)', sigDesc: '۲ دیز: فا دیز، دو دیز (F♯, C♯)' },
+  { id: 'a_maj', name: 'لا ماژور (A Major - ۳ دیز: F♯, C♯, G♯)', notes: [9,11,1,2,4,6,8], sharpPref: true, tonicMidi: 69, triadMidi: [69, 73, 76], formula: 'پ - پ - ن - پ - پ - پ - ن', relMinor: 'F♯ Minor (فا دیز مینور)', sigDesc: '۳ دیز: F♯, C♯, G♯' },
+  { id: 'e_maj', name: 'می ماژور (E Major - ۴ دیز: F♯..D♯)', notes: [4,6,8,9,11,1,3], sharpPref: true, tonicMidi: 64, triadMidi: [64, 68, 71], formula: 'پ - پ - ن - پ - پ - پ - ن', relMinor: 'C♯ Minor (دو دیز مینور)', sigDesc: '۴ دیز: F♯, C♯, G♯, D♯' },
+  { id: 'b_maj', name: 'سی ماژور (B Major - ۵ دیز)', notes: [11,1,3,4,6,8,10], sharpPref: true, tonicMidi: 71, triadMidi: [71, 75, 78], formula: 'پ - پ - ن - پ - پ - پ - ن', relMinor: 'G♯ Minor (سل دیز مینور)', sigDesc: '۵ دیز: F♯, C♯, G♯, D♯, A♯' },
+  { id: 'fs_maj', name: 'فا دیز ماژور (F♯ Major - ۶ دیز با حضور E♯)', notes: [6,8,10,11,1,3,5], sharpPref: true, tonicMidi: 66, triadMidi: [66, 70, 73], specialNotes: { 5: 'E♯' }, formula: 'پ - پ - ن - پ - پ - پ - ن', relMinor: 'D♯ Minor (ر دیز مینور)', sigDesc: '۶ دیز (شامل درجه هفتم E♯)' },
+  { id: 'db_maj', name: 'ر بمل ماژور (D♭ Major - ۵ بمل)', notes: [1,3,5,6,8,10,0], sharpPref: false, tonicMidi: 61, triadMidi: [61, 65, 68], formula: 'پ - پ - ن - پ - پ - پ - ن', relMinor: 'B♭ Minor (سی بمل مینور)', sigDesc: '۵ بمل: B♭, E♭, A♭, D♭, G♭' },
+  { id: 'ab_maj', name: 'لا بمل ماژور (A♭ Major - ۴ بمل)', notes: [8,10,0,1,3,5,7], sharpPref: false, tonicMidi: 68, triadMidi: [68, 72, 75], formula: 'پ - پ - ن - پ - پ - پ - ن', relMinor: 'F Minor (فا مینور)', sigDesc: '۴ بمل: B♭, E♭, A♭, D♭' },
+  { id: 'eb_maj', name: 'می بمل ماژور (E♭ Major - ۳ بمل)', notes: [3,5,7,8,10,0,2], sharpPref: false, tonicMidi: 63, triadMidi: [63, 67, 70], formula: 'پ - پ - ن - پ - پ - پ - ن', relMinor: 'C Minor (دو مینور)', sigDesc: '۳ بمل: B♭, E♭, A♭' },
+  { id: 'bb_maj', name: 'سی بمل ماژور (B♭ Major - ۲ بمل)', notes: [10,0,2,3,5,7,9], sharpPref: false, tonicMidi: 70, triadMidi: [70, 74, 77], formula: 'پ - پ - ن - پ - پ - پ - ن', relMinor: 'G Minor (سل مینور)', sigDesc: '۲ بمل: B♭, E♭' },
+  { id: 'f_maj', name: 'فا ماژور (F Major - ۱ بمل: B♭)', notes: [5,7,9,10,0,2,4], sharpPref: false, tonicMidi: 65, triadMidi: [65, 69, 72], formula: 'پ - پ - ن - پ - پ - پ - ن', relMinor: 'D Minor (ر مینور)', sigDesc: '۱ بمل: سی بمل (B♭)' },
+  { id: 'chromatic', name: 'کروماتیک جهانی (نمایش کامل ۵۱ نوت پیانو و ویولن)', notes: [0,1,2,3,4,5,6,7,8,9,10,11], sharpPref: true, tonicMidi: 60, triadMidi: [60, 64, 67], formula: '۱۲ نیم‌پرده مساوی (12-TET)', relMinor: '-', sigDesc: 'تمام درجات کروماتیک فعال' }
+];
+
+const FIFTHS_WHEEL_DATA = [
+  { major: 'C', solfege: 'دو', minor: 'Am', minorSol: 'لا مینور', sig: 'بدون علامت (♮)', scaleId: 'c_maj', tritone: 'F♯ / G♭', triadMidi: [60, 64, 67] },
+  { major: 'G', solfege: 'سل', minor: 'Em', minorSol: 'می مینور', sig: '۱ دیز (F♯)', scaleId: 'g_maj', tritone: 'C♯ / D♭', triadMidi: [67, 71, 74] },
+  { major: 'D', solfege: 'رِ', minor: 'Bm', minorSol: 'سی مینور', sig: '۲ دیز (F♯, C♯)', scaleId: 'd_maj', tritone: 'G♯ / A♭', triadMidi: [62, 66, 69] },
+  { major: 'A', solfege: 'لا', minor: 'F♯m', minorSol: 'فا دیز مینور', sig: '۳ دیز (F♯, C♯, G♯)', scaleId: 'a_maj', tritone: 'D♯ / E♭', triadMidi: [69, 73, 76] },
+  { major: 'E', solfege: 'می', minor: 'C♯m', minorSol: 'دو دیز مینور', sig: '۴ دیز (F♯..D♯)', scaleId: 'e_maj', tritone: 'A♯ / B♭', triadMidi: [64, 68, 71] },
+  { major: 'B', solfege: 'سی', minor: 'G♯m', minorSol: 'سل دیز مینور', sig: '۵ دیز', scaleId: 'b_maj', tritone: 'F', triadMidi: [71, 75, 78] },
+  { major: 'F♯', solfege: 'فا♯', minor: 'D♯m', minorSol: 'ر دیز مینور', sig: '۶ دیز / ۶ بمل', scaleId: 'fs_maj', tritone: 'C', triadMidi: [66, 70, 73] },
+  { major: 'D♭', solfege: 'رِ♭', minor: 'B♭m', minorSol: 'سی بمل مینور', sig: '۵ بمل', scaleId: 'db_maj', tritone: 'G', triadMidi: [61, 65, 68] },
+  { major: 'A♭', solfege: 'لا♭', minor: 'Fm', minorSol: 'فا مینور', sig: '۴ بمل', scaleId: 'ab_maj', tritone: 'D', triadMidi: [68, 72, 75] },
+  { major: 'E♭', solfege: 'می♭', minor: 'Cm', minorSol: 'دو مینور', sig: '۳ بمل', scaleId: 'eb_maj', tritone: 'A', triadMidi: [63, 67, 70] },
+  { major: 'B♭', solfege: 'سی♭', minor: 'Gm', minorSol: 'سل مینور', sig: '۲ بمل (B♭, E♭)', scaleId: 'bb_maj', tritone: 'E', triadMidi: [70, 74, 77] },
+  { major: 'F', solfege: 'فا', minor: 'Dm', minorSol: 'رِ مینور', sig: '۱ بمل (B♭)', scaleId: 'f_maj', tritone: 'B', triadMidi: [65, 69, 72] }
+];
+
+let audioCtx = null;
+let currentCategory = 'persian';
+let isPlayingScaleActive = false;
+let isPlayingMotifActive = false;
+let activeScalePlaybackTids = [];
+let activeScheduledNodes = [];
+let activeViolinVoices = [];
+let ALL_KEYS = [];
+let currentWhiteX = 0;
+const whiteKeyWidth = 48;
+const blackKeyWidth = 30;
+
+let circleSelectedIndex = 0;
+let circleRotationAngle = 0;
+let circleActiveMode = 'family';
+
+function initWebAudio() {
+  if (!audioCtx) {
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    audioCtx = new AudioCtx();
+  }
+  if (audioCtx.state === 'suspended') {
+    audioCtx.resume();
+  }
+}
+
+function midiToMicroFreq(midi, centsOffset = 0) {
+  const baseFreq = 440 * Math.pow(2, (midi - 69) / 12);
+  return baseFreq * Math.pow(2, centsOffset / 1200);
+}
+
+function playVoice(freq, startTime = 0, duration = 1.6) {
+  initWebAudio();
+  const timbre = document.getElementById('soundTimbre') ? document.getElementById('soundTimbre').value : 'piano';
+  const articulation = document.getElementById('articulationMode') ? document.getElementById('articulationMode').value : 'glissando';
+  const t0 = startTime > 0 ? startTime : audioCtx.currentTime;
+
+  const mainGain = audioCtx.createGain();
+  mainGain.connect(audioCtx.destination);
+
+  if (articulation === 'staccato') {
+    const staccatoDur = 0.18;
+    mainGain.gain.setValueAtTime(0.0001, t0);
+    mainGain.gain.exponentialRampToValueAtTime(0.95, t0 + 0.005);
+    mainGain.gain.exponentialRampToValueAtTime(0.18, t0 + 0.06);
+    mainGain.gain.exponentialRampToValueAtTime(0.0001, t0 + staccatoDur);
+
+    if (timbre === 'piano') {
+      const harmonics = [
+        { fRatio: 1, gain: 0.80 },
+        { fRatio: 2, gain: 0.35 },
+        { fRatio: 3, gain: 0.18 },
+        { fRatio: 4, gain: 0.08 }
+      ];
+
+      harmonics.forEach(h => {
+        const osc = audioCtx.createOscillator();
+        const hGain = audioCtx.createGain();
+        osc.type = h.fRatio === 1 ? 'triangle' : 'sine';
+        osc.frequency.setValueAtTime(freq * h.fRatio, t0);
+        hGain.gain.setValueAtTime(h.gain, t0);
+        hGain.gain.exponentialRampToValueAtTime(0.0001, t0 + staccatoDur);
+
+        osc.connect(hGain);
+        hGain.connect(mainGain);
+        osc.start(t0);
+        osc.stop(t0 + staccatoDur);
+        activeScheduledNodes.push(osc);
+      });
+    } else {
+      const osc = audioCtx.createOscillator();
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(freq, t0);
+
+      const filter = audioCtx.createBiquadFilter();
+      filter.type = 'lowpass';
+      filter.frequency.setValueAtTime(Math.min(3800, freq * 4.0), t0);
+
+      osc.connect(filter);
+      filter.connect(mainGain);
+
+      osc.start(t0);
+      osc.stop(t0 + staccatoDur);
+      activeScheduledNodes.push(osc);
+    }
+  } else {
+    if (timbre === 'piano') {
+      const sustainTime = Math.max(duration, 1.5);
+      mainGain.gain.setValueAtTime(0.0001, t0);
+      mainGain.gain.exponentialRampToValueAtTime(0.85, t0 + 0.010);
+      mainGain.gain.exponentialRampToValueAtTime(0.40, t0 + 0.22);
+      mainGain.gain.exponentialRampToValueAtTime(0.0001, t0 + sustainTime);
+
+      const harmonics = [
+        { fRatio: 1, gain: 0.70 },
+        { fRatio: 2, gain: 0.32 },
+        { fRatio: 3, gain: 0.18 },
+        { fRatio: 4, gain: 0.09 },
+        { fRatio: 5, gain: 0.04 }
+      ];
+
+      harmonics.forEach(h => {
+        const osc = audioCtx.createOscillator();
+        const hGain = audioCtx.createGain();
+        osc.type = h.fRatio === 1 ? 'triangle' : 'sine';
+        osc.frequency.setValueAtTime(freq * h.fRatio, t0);
+        hGain.gain.setValueAtTime(h.gain, t0);
+        hGain.gain.exponentialRampToValueAtTime(0.0001, t0 + (sustainTime / Math.sqrt(h.fRatio)));
+
+        osc.connect(hGain);
+        hGain.connect(mainGain);
+        osc.start(t0);
+        osc.stop(t0 + sustainTime);
+        activeScheduledNodes.push(osc);
+      });
+    } else {
+      while (activeViolinVoices.length >= 2) {
+        const oldest = activeViolinVoices.shift();
+        try {
+          oldest.gain.gain.cancelScheduledValues(t0);
+          oldest.gain.gain.setValueAtTime(Math.max(0.0001, oldest.gain.gain.value || 0.4), t0);
+          oldest.gain.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.18);
+          oldest.osc.stop(t0 + 0.20);
+        } catch (e) {}
+      }
+
+      activeViolinVoices.forEach(prev => {
+        try {
+          prev.gain.gain.cancelScheduledValues(t0);
+          prev.gain.gain.setValueAtTime(Math.max(0.0001, prev.gain.gain.value || 0.45), t0);
+          prev.gain.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.24);
+          prev.osc.stop(t0 + 0.26);
+        } catch (e) {}
+      });
+
+      const noteHold = (duration && duration < 1.0) ? duration : 0.60;
+      const releaseTime = 0.24;
+      const sustainTime = noteHold + releaseTime;
+
+      mainGain.gain.setValueAtTime(0.0001, t0);
+      mainGain.gain.exponentialRampToValueAtTime(0.55, t0 + 0.05); 
+      mainGain.gain.setValueAtTime(0.48, t0 + noteHold);
+      mainGain.gain.exponentialRampToValueAtTime(0.0001, t0 + sustainTime);
+
+      const osc = audioCtx.createOscillator();
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(freq, t0);
+
+      const lfo = audioCtx.createOscillator();
+      const lfoGain = audioCtx.createGain();
+      lfo.frequency.setValueAtTime(5.8, t0);
+      lfoGain.gain.setValueAtTime(freq * 0.012, t0);
+      lfo.connect(osc.frequency);
+
+      const filter = audioCtx.createBiquadFilter();
+      filter.type = 'lowpass';
+      filter.frequency.setValueAtTime(Math.min(3200, freq * 3.5), t0);
+
+      osc.connect(filter);
+      filter.connect(mainGain);
+
+      lfo.start(t0 + 0.04);
+      lfo.stop(t0 + sustainTime);
+      osc.start(t0);
+      osc.stop(t0 + sustainTime);
+
+      activeScheduledNodes.push(osc, lfo);
+      activeViolinVoices.push({ osc, lfo, gain: mainGain, stopTime: t0 + sustainTime });
+    }
+  }
+}
+
+function highlightKeyVisual(element, durationMs = 350) {
+  if (!element) return;
+  element.classList.add('pressed');
+  setTimeout(() => element.classList.remove('pressed'), durationMs);
+}
+
+let isPointerDragging = false;
+let lastTriggeredMidi = null;
+let edgeAutoScrollRaf = null;
+let currentPointerClientX = 0;
+let currentPointerClientY = 0;
+
+function setupPianoPointerGestures() {
+  const board = document.getElementById('pianoBoard');
+  const viewport = document.getElementById('pianoViewport');
+  if (!board || !viewport) return;
+
+  const getTargetKeyFromPoint = (clientX, clientY) => {
+    const el = document.elementFromPoint(clientX, clientY);
+    if (!el) return null;
+    const keyEl = el.closest('.key');
+    if (!keyEl) return null;
+    return ALL_KEYS.find(k => k.domElement === keyEl);
+  };
+
+  const autoScrollLoop = () => {
+    if (!isPointerDragging) {
+      edgeAutoScrollRaf = null;
+      return;
+    }
+
+    const rect = viewport.getBoundingClientRect();
+    const edgeMargin = 70; 
+    let scrollDelta = 0;
+
+    if (currentPointerClientX < rect.left + edgeMargin && currentPointerClientX >= rect.left - 40) {
+      const intensity = (rect.left + edgeMargin - currentPointerClientX) / edgeMargin;
+      scrollDelta = -Math.round(4 + intensity * 18);
+    } 
+    else if (currentPointerClientX > rect.right - edgeMargin && currentPointerClientX <= rect.right + 40) {
+      const intensity = (currentPointerClientX - (rect.right - edgeMargin)) / edgeMargin;
+      scrollDelta = Math.round(4 + intensity * 18);
+    }
+
+    if (scrollDelta !== 0) {
+      viewport.scrollLeft += scrollDelta;
+
+      const key = getTargetKeyFromPoint(currentPointerClientX, currentPointerClientY);
+      if (key && key.midi !== lastTriggeredMidi) {
+        lastTriggeredMidi = key.midi;
+        onKeyTriggered(key);
+      }
+    }
+
+    edgeAutoScrollRaf = requestAnimationFrame(autoScrollLoop);
+  };
+
+  const handlePointerStart = (e) => {
+    isPointerDragging = true;
+    currentPointerClientX = e.clientX;
+    currentPointerClientY = e.clientY;
+
+    const key = getTargetKeyFromPoint(e.clientX, e.clientY);
+    if (key) {
+      lastTriggeredMidi = key.midi;
+      onKeyTriggered(key);
+    }
+
+    if (!edgeAutoScrollRaf) {
+      edgeAutoScrollRaf = requestAnimationFrame(autoScrollLoop);
+    }
+  };
+
+  const handlePointerMove = (e) => {
+    if (!isPointerDragging) return;
+    currentPointerClientX = e.clientX;
+    currentPointerClientY = e.clientY;
+
+    const key = getTargetKeyFromPoint(e.clientX, e.clientY);
+    if (key && key.midi !== lastTriggeredMidi) {
+      lastTriggeredMidi = key.midi;
+      onKeyTriggered(key);
+    }
+  };
+
+  const handlePointerEnd = () => {
+    isPointerDragging = false;
+    lastTriggeredMidi = null;
+    if (edgeAutoScrollRaf) {
+      cancelAnimationFrame(edgeAutoScrollRaf);
+      edgeAutoScrollRaf = null;
+    }
+  };
+
+  board.addEventListener('pointerdown', handlePointerStart);
+  window.addEventListener('pointermove', handlePointerMove);
+  window.addEventListener('pointerup', handlePointerEnd);
+  window.addEventListener('pointercancel', handlePointerEnd);
+}
+
+function buildPianoBoard() {
+  const board = document.getElementById('pianoBoard');
+  board.innerHTML = '';
+  ALL_KEYS = [];
+  currentWhiteX = 0;
+
+  for (let midi = 55; midi <= 105; midi++) {
+    const pitchClass = midi % 12;
+    const noteInfo = NOTE_NAMES[pitchClass];
+    const octave = Math.floor(midi / 12) - 1;
+
+    if (!noteInfo.isBlack) {
+      const keyEl = document.createElement('div');
+      keyEl.className = 'key white-key';
+      keyEl.style.left = `calc(${currentWhiteX} * var(--white-w))`;
+
+      const badge = document.createElement('div');
+      badge.className = 'key-badge';
+      badge.textContent = noteInfo.natural;
+
+      const roleBadge = document.createElement('div');
+      roleBadge.className = 'role-badge';
+      roleBadge.style.display = 'none';
+
+      keyEl.appendChild(badge);
+      keyEl.appendChild(roleBadge);
+
+      const keyObj = {
+        midi,
+        isBlack: false,
+        name: noteInfo.natural,
+        solfege: noteInfo.solfege,
+        octave,
+        left: currentWhiteX * whiteKeyWidth,
+        domElement: keyEl,
+        badgeElement: badge,
+        roleElement: roleBadge
+      };
+
+      board.appendChild(keyEl);
+      ALL_KEYS.push(keyObj);
+      currentWhiteX++;
+    } else {
+      const prevWhiteIdx = currentWhiteX - 1;
+      const keyEl = document.createElement('div');
+      keyEl.className = 'key black-key';
+      keyEl.style.left = `calc(${prevWhiteIdx} * var(--white-w) + var(--white-w) - (var(--black-w) / 2))`;
+
+      const badge = document.createElement('div');
+      badge.className = 'key-badge';
+      badge.textContent = noteInfo.sharp;
+
+      const roleBadge = document.createElement('div');
+      roleBadge.className = 'role-badge';
+      roleBadge.style.display = 'none';
+
+      keyEl.appendChild(badge);
+      keyEl.appendChild(roleBadge);
+
+      const keyObj = {
+        midi,
+        isBlack: true,
+        sharp: noteInfo.sharp,
+        flat: noteInfo.flat,
+        solfegeSharp: noteInfo.solfegeSharp,
+        solfegeFlat: noteInfo.solfegeFlat,
+        octave,
+        left: (prevWhiteIdx * whiteKeyWidth) + (whiteKeyWidth - (blackKeyWidth / 2)),
+        domElement: keyEl,
+        badgeElement: badge,
+        roleElement: roleBadge
+      };
+
+      board.appendChild(keyEl);
+      ALL_KEYS.push(keyObj);
+    }
+  }
+
+  board.style.width = `calc(${currentWhiteX} * var(--white-w))`;
+  renderViolinStringsTags();
+  setupPianoPointerGestures();
+}
+
+function renderViolinStringsTags() {
+  document.querySelectorAll('.violin-string-tag').forEach(el => el.remove());
+  const currentScale = getActiveScale();
+  if (!currentScale || !currentScale.kookViolin) return;
+
+  currentScale.kookViolin.forEach((strInfo, idx) => {
+    const k = ALL_KEYS.find(x => x.midi === strInfo.midi);
+    if (k && k.domElement) {
+      const tag = document.createElement('div');
+      tag.className = 'violin-string-tag';
+      tag.textContent = `سیم ${idx + 1}`;
+      k.domElement.appendChild(tag);
+    }
+  });
+}
+
+function getActiveScale() {
+  const select = document.getElementById('scaleSelect');
+  const selId = select ? select.value : 'shor_la';
+  if (currentCategory === 'classical') {
+    return CLASSICAL_SCALES_DATA.find(s => s.id === selId) || CLASSICAL_SCALES_DATA[0];
+  }
+  return PERSIAN_DASTGAH_DATA.find(s => s.id === selId) || PERSIAN_DASTGAH_DATA[0];
+}
+
+function onKeyTriggered(keyObj) {
+  const currentScale = getActiveScale();
+  const pitchClass = keyObj.midi % 12;
+
+  if (currentScale.id !== 'chromatic' && !currentScale.notes.includes(pitchClass)) {
+    return;
+  }
+
+  const cents = (currentScale.microCents && currentScale.microCents[pitchClass]) ? currentScale.microCents[pitchClass] : 0;
+  const freq = midiToMicroFreq(keyObj.midi, cents);
+  const articulation = document.getElementById('articulationMode') ? document.getElementById('articulationMode').value : 'glissando';
+  
+  playVoice(freq, 0, articulation === 'staccato' ? 0.18 : 1.4);
+  highlightKeyVisual(keyObj.domElement, articulation === 'staccato' ? 160 : 350);
+
+  const noteTitle = keyObj.isBlack ? (keyObj.sharp + '/' + keyObj.flat) : keyObj.name;
+  document.getElementById('statusActiveNote').innerText = `نواخته شد: ${noteTitle} (اکتاو ${keyObj.octave}) | ${freq.toFixed(1)}Hz`;
+}
+
+function populateScaleOptions() {
+  const select = document.getElementById('scaleSelect');
+  select.innerHTML = '';
+
+  const data = currentCategory === 'classical' ? CLASSICAL_SCALES_DATA : PERSIAN_DASTGAH_DATA;
+  data.forEach(item => {
+    const opt = document.createElement('option');
+    opt.value = item.id;
+    opt.textContent = item.name;
+    select.appendChild(opt);
+  });
+}
+
+function applyScaleChange() {
+  renderKeyLabels();
+  renderViolinStringsRow();
+  renderViolinStringsTags();
+  updateDastgahInfoBadge();
+}
+
+function renderViolinStringsRow() {
+  const container = document.getElementById('stringButtonsContainer');
+  const row = document.getElementById('violinStringsRow');
+  const title = document.getElementById('stringsTitle');
+  container.innerHTML = '';
+
+  const currentScale = getActiveScale();
+  if (currentScale.isPersian) {
+    row.className = 'violin-strings-row persian-kook';
+    title.innerHTML = '<span>🎻 کوک ۴ سیم ویولن (از سیم ۱ زیر به سیم ۴ بم):</span>';
+  } else {
+    row.className = 'violin-strings-row classical-kook';
+    title.innerHTML = '<span>🎻 کوک استاندارد ارکسترال ویولن جهانی (فواصل پنجم درست):</span>';
+  }
+
+  const kookList = currentScale.kookViolin || [
+    { name: 'سیم ۱: E5 (می)', freq: 659.25, midi: 76 },
+    { name: 'سیم ۲: A4 (لا)', freq: 440.00, midi: 69 },
+    { name: 'سیم ۳: D4 (رِ)', freq: 293.66, midi: 62 },
+    { name: 'سیم ۴: G3 (سل)', freq: 196.00, midi: 55 }
+  ];
+
+  kookList.forEach(item => {
+    const btn = document.createElement('button');
+    btn.className = 'btn-string';
+    btn.textContent = `${item.name} (${item.freq}Hz)`;
+    btn.onclick = () => {
+      playVoice(item.freq, 0, 1.6);
+      jumpToMidi(item.midi);
+      document.getElementById('statusActiveNote').innerText = `پخش صدای مرجع سیم ویولن: ${item.name} | ${item.freq}Hz`;
+    };
+    container.appendChild(btn);
+  });
+}
+
+function switchCategory(cat) {
+  currentCategory = cat;
+  document.getElementById('tabPersian').classList.toggle('active', cat === 'persian');
+  document.getElementById('tabPersian').classList.toggle('persian-active', cat === 'persian');
+  document.getElementById('tabDaramad').classList.toggle('active', cat === 'daramad');
+  document.getElementById('tabDaramad').classList.toggle('daramad-active', cat === 'daramad');
+  document.getElementById('tabClassical').classList.toggle('active', cat === 'classical');
+  document.getElementById('tabClassical').classList.toggle('classical-active', cat === 'classical');
+
+  const circlePanel = document.getElementById('circleOfFifthsPanel');
+  const daramadPanel = document.getElementById('daramadPanel');
+  const persianGuide = document.getElementById('persianGuideSection');
+  const classicalGuide = document.getElementById('classicalGuideSection');
+  const playMotifBtn = document.getElementById('playMotifBtn');
+  const legend = document.getElementById('statusBarLegend');
+  const headerBadge = document.getElementById('headerBadgeText');
+  const mainTitleSub = document.getElementById('mainTitleSub');
+
+  if (cat === 'classical') {
+    circlePanel.style.display = 'flex';
+    daramadPanel.style.display = 'none';
+    persianGuide.style.display = 'none';
+    classicalGuide.style.display = 'flex';
+    playMotifBtn.style.display = 'none';
+
+    headerBadge.innerText = 'سامانه جامع گام‌های دیاتونیک کلاسیک، دایره پنجم‌ها و انطباق هارمونی پیانو و ویولن';
+    mainTitleSub.innerText = 'انطباق گام‌های دیاتونیک جهانی، دایره پنجم‌ها و هارمونی بر پیانو و ویولن';
+
+    legend.innerHTML = `
+      <span class="legend-item"><span class="legend-dot" style="background:#f59e0b;"></span> طلایی: نوت پایه (تونیک I)</span>
+      <span class="legend-item"><span class="legend-dot" style="background:var(--color-shahed);"></span> بنفش: درجات گام دیاتونیک</span>
+      <span class="legend-item"><span class="legend-dot" style="background:#cbd5e1; border:1px solid #94a3b8;"></span> مات: خارج از گام (قفل ضدفالش)</span>
+    `;
+
+    document.getElementById('scaleSelectLabel').innerText = 'انتخاب گام دیاتونیک کلاسیک (ماژور / مینور):';
+    document.getElementById('playScaleLabel').innerText = 'پخش سریع رفت و برگشتی گام (۱۰ ثانیه)';
+
+    populateScaleOptions();
+    document.getElementById('scaleSelect').value = 'c_maj';
+    applyScaleChange();
+    renderCircleOfFifthsSVG();
+  } else if (cat === 'daramad') {
+    circlePanel.style.display = 'none';
+    daramadPanel.style.display = 'flex';
+    persianGuide.style.display = 'flex';
+    classicalGuide.style.display = 'none';
+    playMotifBtn.style.display = 'inline-flex';
+
+    headerBadge.innerText = 'تالار درآمدها، پیش‌درآمدها و موتیف‌های شاخص ردیف ویولن ایران';
+    mainTitleSub.innerText = 'تالار درآمدها، پیش‌درآمدها و شناسنامه صوتی ردیف ویولن ایران';
+
+    legend.innerHTML = `
+      <span class="legend-item"><span class="legend-dot" style="background:var(--color-shahed);"></span> بنفش: نوت شاهد</span>
+      <span class="legend-item"><span class="legend-dot" style="background:var(--color-ist);"></span> سبز: نوت ایست</span>
+      <span class="legend-item"><span class="legend-dot" style="background:var(--color-both);"></span> فیروزه‌ای: هم شاهد و هم ایست</span>
+      <span class="legend-item"><span class="legend-dot" style="background:#cbd5e1; border:1px solid #94a3b8;"></span> مات: قفل ضدفالش</span>
+    `;
+
+    document.getElementById('scaleSelectLabel').innerText = 'انتخاب دستگاه یا آواز ایرانی:';
+    document.getElementById('playScaleLabel').innerText = 'پخش سریع رفت و برگشتی دستگاه (۱۰ ثانیه)';
+
+    populateScaleOptions();
+    applyScaleChange();
+    renderDaramadGallery();
+  } else {
+    circlePanel.style.display = 'none';
+    daramadPanel.style.display = 'none';
+    persianGuide.style.display = 'flex';
+    classicalGuide.style.display = 'none';
+    playMotifBtn.style.display = 'inline-flex';
+
+    headerBadge.innerText = 'سامانه ۱۲ دستگاه و آواز ردیف ویولن ایران و پهنه کامل ساز (G3 تا A7)';
+    mainTitleSub.innerText = 'انطباق نوت‌های موسیقی، ۱۲ دستگاه و آواز ایرانی بر پیانو و ویولن';
+
+    legend.innerHTML = `
+      <span class="legend-item"><span class="legend-dot" style="background:var(--color-shahed);"></span> بنفش: نوت شاهد</span>
+      <span class="legend-item"><span class="legend-dot" style="background:var(--color-ist);"></span> سبز: نوت ایست</span>
+      <span class="legend-item"><span class="legend-dot" style="background:var(--color-both);"></span> فیروزه‌ای: هم شاهد و هم ایست</span>
+      <span class="legend-item"><span class="legend-dot" style="background:#cbd5e1; border:1px solid #94a3b8;"></span> مات: قفل ضدفالش</span>
+    `;
+
+    document.getElementById('scaleSelectLabel').innerText = 'انتخاب دستگاه یا آواز ایرانی (۱۲ ردیف):';
+    document.getElementById('playScaleLabel').innerText = 'پخش سریع رفت و برگشتی دستگاه (۱۰ ثانیه)';
+
+    populateScaleOptions();
+    applyScaleChange();
+  }
+}
+
+function updateDastgahInfoBadge() {
+  const currentScale = getActiveScale();
+  const badge = document.getElementById('dastgahInfoBadge');
+  if (currentScale.isPersian && currentScale.info) {
+    badge.style.display = 'block';
+    badge.innerHTML = `<strong>مشخصات و گردش ملودی:</strong> ${currentScale.info} <br><span style="color:#d97706; font-weight:800;">🎵 نمونه اثر شاخص:</span> ${currentScale.pishdaramadTitle || 'درآمد اصیل ردیف'}`;
+  } else if (!currentScale.isPersian && currentScale.formula) {
+    badge.style.display = 'block';
+    badge.innerHTML = `
+      <strong>تحلیل گام کلاسیک:</strong> فرمول فواصل: <span style="font-weight:900; color:#b45309;">${currentScale.formula}</span> | 
+      سرکلید: <span style="font-weight:900; color:var(--color-shahed);">${currentScale.sigDesc}</span> | 
+      مینور نسبی: <span style="font-weight:900; color:var(--color-ist);">${currentScale.relMinor}</span>
+    `;
+  } else {
+    badge.style.display = 'none';
+  }
+}
+
+function renderKeyLabels() {
+  const currentScale = getActiveScale();
+  const accMode = document.getElementById('accidentalMode').value;
+  const nameMode = document.getElementById('namingMode').value;
+
+  ALL_KEYS.forEach(k => {
+    const pitchClass = k.midi % 12;
+    const inScale = currentScale.notes.includes(pitchClass);
+
+    k.domElement.classList.remove('is-shahed', 'is-ist', 'is-shahed-and-ist');
+    k.roleElement.style.display = 'none';
+
+    if (currentScale.id === 'chromatic') {
+      k.domElement.classList.remove('out-of-scale');
+      k.domElement.classList.remove('in-scale');
+    } else {
+      k.domElement.classList.toggle('out-of-scale', !inScale);
+      k.domElement.classList.toggle('in-scale', inScale);
+    }
+
+    if (currentScale.isPersian) {
+      const isShahed = currentScale.shahedMidi !== undefined && ((k.midi % 12) === (currentScale.shahedMidi % 12));
+      const isIst = currentScale.istMidi !== undefined && ((k.midi % 12) === (currentScale.istMidi % 12));
+      const isBoth = isShahed && isIst;
+
+      if (isBoth) {
+        k.domElement.classList.add('is-shahed-and-ist');
+        k.roleElement.style.display = 'block';
+        k.roleElement.className = 'role-badge role-both';
+        k.roleElement.innerText = 'شاهد و ایست';
+      } else if (isShahed) {
+        k.domElement.classList.add('is-shahed');
+        k.roleElement.style.display = 'block';
+        k.roleElement.className = 'role-badge role-shahed';
+        k.roleElement.innerText = 'شاهد';
+      } else if (isIst) {
+        k.domElement.classList.add('is-ist');
+        k.roleElement.style.display = 'block';
+        k.roleElement.className = 'role-badge role-ist';
+        k.roleElement.innerText = 'ایست';
+      }
+
+      if (currentScale.microLabels && currentScale.microLabels[pitchClass]) {
+        const mInfo = currentScale.microLabels[pitchClass];
+        const mText = nameMode === 'letter' ? mInfo.letter : mInfo.solfege;
+        k.badgeElement.innerHTML = `<span>${mText}</span><br><span class="micro-pill pill-koron">کوک کُرن</span>`;
+        return;
+      }
+    } else {
+      if (currentScale.tonicMidi !== undefined && (k.midi % 12) === (currentScale.tonicMidi % 12)) {
+        k.domElement.classList.add('is-shahed');
+        k.roleElement.style.display = 'block';
+        k.roleElement.className = 'role-badge role-shahed';
+        k.roleElement.innerText = 'پایه (I)';
+      }
+    }
+
+    if (currentScale.specialNotes && currentScale.specialNotes[pitchClass]) {
+      k.badgeElement.innerText = currentScale.specialNotes[pitchClass];
+      return;
+    }
+
+    if (!k.isBlack) {
+      k.badgeElement.innerText = nameMode === 'letter' ? k.name : k.solfege;
+    } else {
+      const showSharp = accMode === 'sharp' || (accMode === 'auto' && currentScale.sharpPref);
+
+      if (accMode === 'both') {
+        k.badgeElement.innerHTML = `${k.sharp}<br>${k.flat}`;
+      } else if (showSharp) {
+        k.badgeElement.innerText = nameMode === 'letter' ? k.sharp : k.solfegeSharp;
+      } else {
+        k.badgeElement.innerText = nameMode === 'letter' ? k.flat : k.solfegeFlat;
+      }
+    }
+  });
+}
+
+function togglePlayScale() {
+  if (isPlayingScaleActive) {
+    stopScalePlayback();
+  } else {
+    if (isPlayingMotifActive) stopMotifPlayback();
+    startScalePlayback();
+  }
+}
+
+function stopScalePlayback() {
+  activeScalePlaybackTids.forEach(t => clearTimeout(t));
+  activeScalePlaybackTids = [];
+
+  activeScheduledNodes.forEach(node => {
+    try {
+      if (node.stop) node.stop();
+      if (node.gain && audioCtx) {
+        node.gain.setValueAtTime(0.0001, audioCtx.currentTime);
+      }
+    } catch (e) {}
+  });
+  activeScheduledNodes = [];
+  activeViolinVoices = [];
+
+  isPlayingScaleActive = false;
+  document.getElementById('playScaleLabel').innerText = currentCategory === 'classical' 
+    ? 'پخش سریع رفت و برگشتی گام (۱۰ ثانیه)' 
+    : 'پخش سریع رفت و برگشتی دستگاه (۱۰ ثانیه)';
+  ALL_KEYS.forEach(k => k.domElement.classList.remove('pressed'));
+}
+
+function startScalePlayback() {
+  initWebAudio();
+  const currentScale = getActiveScale();
+  if (!currentScale) return;
+
+  const inScaleKeys = ALL_KEYS.filter(k => currentScale.notes.includes(k.midi % 12));
+  if (inScaleKeys.length === 0) return;
+
+  const ascendingKeys = [...inScaleKeys];
+  const descendingKeys = [...inScaleKeys].slice(0, -1).reverse();
+  const fullSequence = [...ascendingKeys, ...descendingKeys];
+
+  isPlayingScaleActive = true;
+  document.getElementById('playScaleLabel').innerText = 'توقف پخش سریع';
+
+  const bpmVal = parseInt(document.getElementById('tempoSelector') ? document.getElementById('tempoSelector').value : '120', 10);
+  const step = Math.max(0.18, (60 / bpmVal) * 0.48);
+  const baseTime = Math.max(audioCtx.currentTime, 0.05) + 0.05;
+  const articulation = document.getElementById('articulationMode') ? document.getElementById('articulationMode').value : 'glissando';
+
+  fullSequence.forEach((k, idx) => {
+    const noteStart = baseTime + (idx * step);
+    const pitchClass = k.midi % 12;
+    const cents = (currentScale.microCents && currentScale.microCents[pitchClass]) ? currentScale.microCents[pitchClass] : 0;
+    const freq = midiToMicroFreq(k.midi, cents);
+
+    playVoice(freq, noteStart, articulation === 'staccato' ? 0.18 : 1.5);
+
+    const delayMs = (noteStart - audioCtx.currentTime) * 1000;
+    const tid = setTimeout(() => {
+      highlightKeyVisual(k.domElement, articulation === 'staccato' ? 160 : Math.max(220, step * 850));
+      const direction = idx < ascendingKeys.length ? '▲ بالارونده' : '▼ پایین‌رونده';
+      document.getElementById('statusActiveNote').innerText = `${direction}: ${k.badgeElement.innerText.replace('\n', ' ')}`;
+
+      const leftEdge = viewport.scrollLeft;
+      const rightEdge = leftEdge + viewport.clientWidth;
+      if (k.left < leftEdge || k.left > rightEdge - 60) {
+        viewport.scrollTo({ left: k.left - 50, behavior: 'smooth' });
+      }
+    }, Math.max(0, delayMs));
+    activeScalePlaybackTids.push(tid);
+  });
+
+  const totalMs = (fullSequence.length * step + 0.4) * 1000;
+  const finishTid = setTimeout(stopScalePlayback, totalMs);
+  activeScalePlaybackTids.push(finishTid);
+}
+
+function playCurrentMotif() {
+  const currentScale = getActiveScale();
+  if (!currentScale || !currentScale.motifMelody) return;
+  playMotifSequence(currentScale.motifMelody, currentScale.name);
+}
+
+function stopMotifPlayback() {
+  activeScalePlaybackTids.forEach(t => clearTimeout(t));
+  activeScalePlaybackTids = [];
+
+  activeScheduledNodes.forEach(node => {
+    try {
+      if (node.stop) node.stop();
+      if (node.gain && audioCtx) {
+        node.gain.setValueAtTime(0.0001, audioCtx.currentTime);
+      }
+    } catch (e) {}
+  });
+  activeScheduledNodes = [];
+  activeViolinVoices = [];
+
+  isPlayingMotifActive = false;
+  document.getElementById('playMotifLabel').innerText = '🎶 شنیدن تم شاخص درآمد';
+  ALL_KEYS.forEach(k => k.domElement.classList.remove('pressed'));
+}
+
+function playMotifSequence(melodyNotes, title) {
+  initWebAudio();
+  if (isPlayingScaleActive) stopScalePlayback();
+  if (isPlayingMotifActive) stopMotifPlayback();
+
+  isPlayingMotifActive = true;
+  document.getElementById('playMotifLabel').innerText = 'توقف موتیف';
+  document.getElementById('statusActiveNote').innerText = `در حال نواختن تم شاخص: ${title}`;
+
+  const currentScale = getActiveScale();
+  let accumulatedTime = Math.max(audioCtx.currentTime, 0.05) + 0.05;
+  const articulation = document.getElementById('articulationMode') ? document.getElementById('articulationMode').value : 'glissando';
+
+  melodyNotes.forEach((item) => {
+    const k = ALL_KEYS.find(x => x.midi === item.midi);
+    const cents = (currentScale.microCents && currentScale.microCents[item.midi % 12]) ? currentScale.microCents[item.midi % 12] : 0;
+    const freq = midiToMicroFreq(item.midi, cents);
+
+    playVoice(freq, accumulatedTime, articulation === 'staccato' ? 0.18 : item.dur);
+
+    const delayMs = (accumulatedTime - audioCtx.currentTime) * 1000;
+    const tid = setTimeout(() => {
+      if (k) {
+        highlightKeyVisual(k.domElement, articulation === 'staccato' ? 160 : item.dur * 850);
+        jumpToMidi(k.midi);
+        document.getElementById('statusActiveNote').innerText = `تم درآمد: ${k.badgeElement.innerText.replace('\n', ' ')}`;
+      }
+    }, Math.max(0, delayMs));
+    activeScalePlaybackTids.push(tid);
+
+    accumulatedTime += item.dur;
+  });
+
+  const finishDelay = (accumulatedTime - audioCtx.currentTime + 0.3) * 1000;
+  const finishTid = setTimeout(stopMotifPlayback, finishDelay);
+  activeScalePlaybackTids.push(finishTid);
+}
+
+function renderCircleOfFifthsSVG() {
+  const rotator = document.getElementById('wheelRotator');
+  if (!rotator) return;
+  rotator.innerHTML = '';
+
+  const rOuter = 190;
+  const rMid1 = 135;
+  const rMid2 = 82;
+
+  const bgCircle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+  bgCircle.setAttribute('cx', '0');
+  bgCircle.setAttribute('cy', '0');
+  bgCircle.setAttribute('r', '194');
+  bgCircle.setAttribute('fill', '#090e17');
+  bgCircle.setAttribute('stroke', '#334155');
+  bgCircle.setAttribute('stroke-width', '2');
+  rotator.appendChild(bgCircle);
+
+  FIFTHS_WHEEL_DATA.forEach((item, idx) => {
+    const startDeg = idx * 30 - 15 - 90;
+    const endDeg = idx * 30 + 15 - 90;
+    const isSelected = idx === circleSelectedIndex;
+
+    const isFamilyTonic = isSelected;
+    const isFamilySub = idx === ((circleSelectedIndex + 11) % 12);
+    const isFamilyDom = idx === ((circleSelectedIndex + 1) % 12);
+    const isFamily = isFamilyTonic || isFamilySub || isFamilyDom;
+
+    const isTritone = idx === ((circleSelectedIndex + 6) % 12);
+
+    let majorFill = (idx % 2 === 0) ? '#1e293b' : '#162032';
+    let minorFill = (idx % 2 === 0) ? '#0f172a' : '#111a28';
+    let strokeCol = '#334155';
+
+    if (circleActiveMode === 'family' && isFamily) {
+      if (isFamilyTonic) {
+        majorFill = '#d97706';
+        minorFill = '#92400e';
+        strokeCol = '#fde68a';
+      } else {
+        majorFill = 'var(--color-shahed)';
+        minorFill = '#4c1d95';
+        strokeCol = '#a78bfa';
+      }
+    } else if (circleActiveMode === 'tritone' && (isSelected || isTritone)) {
+      majorFill = isSelected ? '#d97706' : '#dc2626';
+      minorFill = isSelected ? '#92400e' : '#991b1b';
+      strokeCol = '#f87171';
+    }
+
+    const gSlice = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+    gSlice.setAttribute('class', 'wheel-slice');
+
+    const handleSelect = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      selectCircleKeyByIndex(idx);
+    };
+
+    gSlice.addEventListener('click', handleSelect);
+    gSlice.addEventListener('touchstart', handleSelect, { passive: false });
+
+    const pMajor = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    pMajor.setAttribute('d', getAnnulusPath(0, 0, rMid1, rOuter, startDeg, endDeg));
+    pMajor.setAttribute('fill', majorFill);
+    pMajor.setAttribute('stroke', strokeCol);
+    pMajor.setAttribute('stroke-width', isSelected ? '2.5' : '1');
+    gSlice.appendChild(pMajor);
+
+    const pMinor = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    pMinor.setAttribute('d', getAnnulusPath(0, 0, rMid2, rMid1, startDeg, endDeg));
+    pMinor.setAttribute('fill', minorFill);
+    pMinor.setAttribute('stroke', strokeCol);
+    pMinor.setAttribute('stroke-width', isSelected ? '2' : '1');
+    gSlice.appendChild(pMinor);
+
+    const midAngleRad = (idx * 30 - 90) * (Math.PI / 180);
+
+    const rMajLabel = (rOuter + rMid1) / 2;
+    const txtMaj = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    txtMaj.setAttribute('x', Math.cos(midAngleRad) * rMajLabel);
+    txtMaj.setAttribute('y', Math.sin(midAngleRad) * rMajLabel + 5);
+    txtMaj.setAttribute('text-anchor', 'middle');
+    txtMaj.setAttribute('fill', isSelected ? '#ffffff' : (isFamily ? '#f8fafc' : '#e2e8f0'));
+    txtMaj.setAttribute('font-weight', '900');
+    txtMaj.setAttribute('font-size', '14');
+    txtMaj.setAttribute('pointer-events', 'none');
+    txtMaj.textContent = item.major;
+    gSlice.appendChild(txtMaj);
+
+    const rMinLabel = (rMid1 + rMid2) / 2;
+    const txtMin = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    txtMin.setAttribute('x', Math.cos(midAngleRad) * rMinLabel);
+    txtMin.setAttribute('y', Math.sin(midAngleRad) * rMinLabel + 4);
+    txtMin.setAttribute('text-anchor', 'middle');
+    txtMin.setAttribute('fill', isSelected ? '#fde68a' : '#94a3b8');
+    txtMin.setAttribute('font-weight', '700');
+    txtMin.setAttribute('font-size', '11');
+    txtMin.setAttribute('pointer-events', 'none');
+    txtMin.textContent = item.minor;
+    gSlice.appendChild(txtMin);
+
+    rotator.appendChild(gSlice);
+  });
+
+  const centerHub = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+  centerHub.setAttribute('cx', '0');
+  centerHub.setAttribute('cy', '0');
+  centerHub.setAttribute('r', rMid2);
+  centerHub.setAttribute('fill', '#020617');
+  centerHub.setAttribute('stroke', '#a78bfa');
+  centerHub.setAttribute('stroke-width', '2');
+  rotator.appendChild(centerHub);
+
+  if (circleActiveMode === 'tritone') {
+    const oppIdx = (circleSelectedIndex + 6) % 12;
+    const rad1 = (circleSelectedIndex * 30 - 90) * (Math.PI / 180);
+    const rad2 = (oppIdx * 30 - 90) * (Math.PI / 180);
+
+    const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+    line.setAttribute('x1', Math.cos(rad1) * (rOuter - 10));
+    line.setAttribute('y1', Math.sin(rad1) * (rOuter - 10));
+    line.setAttribute('x2', Math.cos(rad2) * (rOuter - 10));
+    line.setAttribute('y2', Math.sin(rad2) * (rOuter - 10));
+    line.setAttribute('stroke', '#ef4444');
+    line.setAttribute('stroke-width', '3.5');
+    line.setAttribute('stroke-dasharray', '5,5');
+    rotator.appendChild(line);
+  }
+
+  const cur = FIFTHS_WHEEL_DATA[circleSelectedIndex];
+  const centerText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+  centerText.setAttribute('x', '0');
+  centerText.setAttribute('y', '-6');
+  centerText.setAttribute('text-anchor', 'middle');
+  centerText.setAttribute('fill', '#a78bfa');
+  centerText.setAttribute('font-size', '16');
+  centerText.setAttribute('font-weight', '900');
+  centerText.textContent = cur.major;
+  rotator.appendChild(centerText);
+
+  const centerSub = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+  centerSub.setAttribute('x', '0');
+  centerSub.setAttribute('y', '15');
+  centerSub.setAttribute('text-anchor', 'middle');
+  centerSub.setAttribute('fill', '#94a3b8');
+  centerSub.setAttribute('font-size', '10.5');
+  centerSub.setAttribute('font-weight', '700');
+  centerSub.textContent = cur.sig;
+  rotator.appendChild(centerSub);
+
+  rotator.setAttribute('transform', `rotate(${circleRotationAngle})`);
+}
+
+function getAnnulusPath(cx, cy, rIn, rOut, startDeg, endDeg) {
+  const rad = Math.PI / 180;
+  const x1 = cx + rOut * Math.cos(startDeg * rad);
+  const y1 = cy + rOut * Math.sin(startDeg * rad);
+  const x2 = cx + rOut * Math.cos(endDeg * rad);
+  const y2 = cy + rOut * Math.sin(endDeg * rad);
+
+  const x3 = cx + rIn * Math.cos(endDeg * rad);
+  const y3 = cy + rIn * Math.sin(endDeg * rad);
+  const x4 = cx + rIn * Math.cos(startDeg * rad);
+  const y4 = cy + rIn * Math.sin(startDeg * rad);
+
+  return `M ${x1} ${y1} A ${rOut} ${rOut} 0 0 1 ${x2} ${y2} L ${x3} ${y3} A ${rIn} ${rIn} 0 0 0 ${x4} ${y4} Z`;
+}
+
+function selectCircleKeyByIndex(idx) {
+  circleSelectedIndex = idx;
+  const cur = FIFTHS_WHEEL_DATA[idx];
+
+  circleRotationAngle = -(idx * 30);
+  const rotator = document.getElementById('wheelRotator');
+  if (rotator) {
+    rotator.setAttribute('transform', `rotate(${circleRotationAngle})`);
+  }
+
+  document.getElementById('circleSelectedTitle').innerText = `${cur.major} ماژور (${cur.solfege}) / ${cur.minor}`;
+  document.getElementById('circleStatAccidentals').innerText = cur.sig;
+  document.getElementById('circleStatRelativeMinor').innerText = `${cur.minor} (${cur.minorSol})`;
+  document.getElementById('circleStatTritone').innerText = `${cur.tritone} (۳ پرده متضاد)`;
+
+  const IV = FIFTHS_WHEEL_DATA[(idx + 11) % 12];
+  const V = FIFTHS_WHEEL_DATA[(idx + 1) % 12];
+  document.getElementById('circleAnalysisDesc').innerHTML = `
+    <strong>پایه (I):</strong> ${cur.major} | 
+    <strong>زیرنمایان (IV):</strong> ${IV.major} | 
+    <strong>نمایان (V):</strong> ${V.major} <br>
+    <strong>خوشه مینورهای همسایه هارمونی:</strong> ${IV.minor}, ${cur.minor}, ${V.minor}
+  `;
+
+  const scaleSelect = document.getElementById('scaleSelect');
+  if (scaleSelect && cur.scaleId) {
+    scaleSelect.value = cur.scaleId;
+    applyScaleChange();
+  }
+
+  renderCircleOfFifthsSVG();
+  playSelectedTonicChord();
+}
+
+function spinCircleStep(delta) {
+  const nextIdx = (circleSelectedIndex + delta + 12) % 12;
+  selectCircleKeyByIndex(nextIdx);
+}
+
+function toggleCircleMode(mode) {
+  circleActiveMode = mode;
+  document.getElementById('btnCircleTritone').classList.toggle('active-mode', mode === 'tritone');
+  document.getElementById('btnCircleFamily').classList.toggle('active-mode', mode === 'family');
+  renderCircleOfFifthsSVG();
+}
+
+function playSelectedTonicChord() {
+  initWebAudio();
+  const cur = FIFTHS_WHEEL_DATA[circleSelectedIndex];
+  if (!cur || !cur.triadMidi) return;
+
+  const baseTime = Math.max(audioCtx.currentTime, 0.05) + 0.05;
+
+  cur.triadMidi.forEach((midi, idx) => {
+    const freq = midiToMicroFreq(midi, 0);
+    playVoice(freq, baseTime + (idx * 0.07), 1.6);
+
+    const k = ALL_KEYS.find(x => x.midi === midi);
+    if (k) {
+      setTimeout(() => highlightKeyVisual(k.domElement, 1100), (idx * 0.07) * 1000);
+    }
+  });
+
+  jumpToMidi(cur.triadMidi[0]);
+  document.getElementById('statusActiveNote').innerText = `آکورد پایگی: ${cur.major} ماژور (${cur.solfege}) [${cur.triadMidi.map(m => NOTE_NAMES[m % 12].natural || NOTE_NAMES[m % 12].sharp).join(' - ')}]`;
+}
+
+function renderDaramadGallery() {
+  const container = document.getElementById('daramadCardsContainer');
+  container.innerHTML = '';
+
+  PERSIAN_DASTGAH_DATA.forEach(d => {
+    const card = document.createElement('div');
+    card.className = 'daramad-card';
+
+    card.innerHTML = `
+      <div>
+        <div style="font-size:14.5px; font-weight:900; color:var(--text-dark); display:flex; justify-content:space-between; align-items:center;">
+          <span>${d.name}</span>
+          <span style="font-size:11px; color:var(--color-shahed); background:#f3e8ff; padding:2px 8px; border-radius:6px;">ردیف ویولن</span>
+        </div>
+        <div style="font-size:12px; color:#64748b; line-height:1.6; margin-top:6px;">
+          <strong>شاهد و ایست:</strong> [${d.shahedName || 'شاهد'}] | ایست: [${d.istName || 'ایست'}]
+        </div>
+        <div style="background:#fef3c7; border-radius:8px; padding:6px 10px; font-size:11.5px; color:#92400e; font-weight:700; margin-top:8px;">
+          🎼 ${d.pishdaramadTitle || 'درآمد و گوشه‌های ردیف'}
+        </div>
+      </div>
+      <div style="display:flex; gap:8px; margin-top:10px;">
+        <button class="btn-motif" style="flex:1; padding:7px 10px; font-size:12px; justify-content:center;">
+          <span>▶ پخش تم شاخص</span>
+        </button>
+      </div>
+    `;
+
+    card.querySelector('button').onclick = () => {
+      document.getElementById('scaleSelect').value = d.id;
+      applyScaleChange();
+      jumpToMidi(d.shahedMidi || 69);
+      playMotifSequence(d.motifMelody, d.name);
+    };
+
+    container.appendChild(card);
+  });
+}
+
+const viewport = document.getElementById('pianoViewport');
+const slider = document.getElementById('pianoSlider');
+
+viewport.addEventListener('scroll', () => {
+  const max = viewport.scrollWidth - viewport.clientWidth;
+  if (max > 0) {
+    slider.value = (viewport.scrollLeft / max) * 100;
+  }
+});
+
+function onSliderDrag(val) {
+  const max = viewport.scrollWidth - viewport.clientWidth;
+  viewport.scrollLeft = (val / 100) * max;
+}
+
+function stepScroll(offset) {
+  viewport.scrollBy({ left: offset, behavior: 'smooth' });
+}
+
+function jumpToMidi(midi) {
+  const k = ALL_KEYS.find(x => x.midi === midi);
+  if (k) {
+    viewport.scrollTo({ left: k.left - 40, behavior: 'smooth' });
+  }
+}
+
+function toggleFullscreen() {
+  if (!document.fullscreenElement) {
+    document.documentElement.requestFullscreen().catch(() => {});
+  } else {
+    if (document.exitFullscreen) document.exitFullscreen();
+  }
+}
+
+function exportAnnotatedSnapshot() {
+  const currentScale = getActiveScale();
+  const canvas = document.createElement('canvas');
+  const ctx = canvas.getContext('2d');
+  const totalW = currentWhiteX * whiteKeyWidth;
+  const headerH = 118;
+  const totalH = headerH + 280;
+
+  canvas.width = totalW;
+  canvas.height = totalH;
+
+  ctx.fillStyle = '#f8fafc';
+  ctx.fillRect(0, 0, totalW, totalH);
+
+  ctx.fillStyle = '#ffffff';
+  ctx.fillRect(10, 10, totalW - 20, headerH - 16);
+  ctx.strokeStyle = '#e2e8f0';
+  ctx.lineWidth = 2;
+  ctx.strokeRect(10, 10, totalW - 20, headerH - 16);
+
+  ctx.fillStyle = '#b45309';
+  ctx.fillRect(10, 10, totalW - 20, 5);
+
+  ctx.fillStyle = '#0f172a';
+  ctx.font = 'bold 24px sans-serif';
+  ctx.textAlign = 'right';
+  ctx.fillText(`«پرده‌نگار» • شناسنامه: ${currentScale.name}`, totalW - 30, 46);
+
+  let subDetails = '';
+  if (currentScale.isPersian) {
+    const shahed = currentScale.shahedName || 'مشخص شده';
+    const ist = currentScale.istName || 'مشخص شده';
+    let kookDesc = '';
+    if (currentScale.kookViolin) {
+      kookDesc = ' | کوک سیم‌ها (۱ به ۴): ' + currentScale.kookViolin.map(v => v.name.split(':')[1].trim()).join(' - ');
+    }
+    subDetails = `نوت شاهد: [${shahed}]  |  نوت ایست: [${ist}]${kookDesc}`;
+  } else {
+    subDetails = `نوع: گام کلاسیک جهانی  |  محدوده: پهنه کامل ساز (G3 تا A7)`;
+  }
+
+  ctx.fillStyle = '#6b21a8';
+  ctx.font = 'bold 13.5px sans-serif';
+  ctx.textAlign = 'right';
+  ctx.fillText(subDetails, totalW - 30, 74);
+
+  ctx.fillStyle = '#854d0e';
+  ctx.font = 'bold 12.5px sans-serif';
+  ctx.textAlign = 'left';
+  ctx.fillText('مشاور علمی و هنری: استاد بابک بختیاری', 30, 44);
+
+  ctx.fillStyle = '#b45309';
+  ctx.font = 'bold 12.5px sans-serif';
+  ctx.textAlign = 'left';
+  ctx.fillText('پدیدآورنده و مؤلف: ایمان برزجان (imanbarzjan.ir), 30, 70);
+
+  const keysTopY = headerH + 6;
+  ctx.fillStyle = '#b91c1c';
+  ctx.fillRect(0, keysTopY, totalW, 10);
+
+  ALL_KEYS.filter(k => !k.isBlack).forEach(k => {
+    const isOut = k.domElement.classList.contains('out-of-scale');
+    const isShahed = k.domElement.classList.contains('is-shahed');
+    const isIst = k.domElement.classList.contains('is-ist');
+    const isBoth = k.domElement.classList.contains('is-shahed-and-ist');
+
+    ctx.fillStyle = isBoth ? '#e0f2fe' : (isShahed ? '#f3e8ff' : (isIst ? '#dcfce7' : (isOut ? '#e2e8f0' : '#ffffff')));
+    ctx.fillRect(k.left, keysTopY + 10, whiteKeyWidth - 1, 230);
+    ctx.strokeStyle = isBoth ? '#0ea5e9' : (isShahed ? '#8b5cf6' : (isIst ? '#10b981' : '#94a3b8'));
+    ctx.strokeRect(k.left, keysTopY + 10, whiteKeyWidth - 1, 230);
+
+    ctx.fillStyle = isOut ? '#94a3b8' : '#0f172a';
+    ctx.font = 'bold 13px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText(k.badgeElement.innerText.replace('\n', ' '), k.left + (whiteKeyWidth / 2), keysTopY + 225);
+  });
+
+  ALL_KEYS.filter(k => k.isBlack).forEach(k => {
+    const isOut = k.domElement.classList.contains('out-of-scale');
+    const isShahed = k.domElement.classList.contains('is-shahed');
+    const isIst = k.domElement.classList.contains('is-ist');
+    const isBoth = k.domElement.classList.contains('is-shahed-and-ist');
+
+    ctx.fillStyle = isBoth ? '#0ea5e9' : (isShahed ? '#8b5cf6' : (isIst ? '#10b981' : (isOut ? '#64748b' : '#1e293b')));
+    ctx.fillRect(k.left, keysTopY + 10, blackKeyWidth, 142);
+    ctx.strokeStyle = '#0f172a';
+    ctx.strokeRect(k.left, keysTopY + 10, blackKeyWidth, 142);
+
+    ctx.fillStyle = isOut ? '#cbd5e1' : '#fef3c7';
+    ctx.font = 'bold 10px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText(k.badgeElement.innerText.replace('\n', ' '), k.left + (blackKeyWidth / 2), keysTopY + 130);
+  });
+
+  const link = document.createElement('a');
+  link.download = `pardehe_negar_${currentScale.id}_v2.6.7_barzjan.png`;
+  link.href = canvas.toDataURL('image/png');
+  link.click();
+}
+
+window.onload = function() {
+  buildPianoBoard();
+  populateScaleOptions();
+  applyScaleChange();
+  jumpToMidi(64);
+  renderCircleOfFifthsSVG();
+};
+</script>
+</body>
+</html>

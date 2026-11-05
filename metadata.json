@@ -1,0 +1,6 @@
+{
+  "name": "Continuum Acusticum - The Iranian-Danubian Sound World",
+  "description": "An exquisite Renaissance-meets-academic cartographic artwork depicting the historical acoustic continuum connecting the Iranian Plateau, Anatolia, the Balkans, and the Carpathian-Danube basin.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
