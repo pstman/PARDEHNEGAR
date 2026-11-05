@@ -1,0 +1,3 @@
+[[env.preview.kv_namespaces]]
+binding = "KV_STORE"
+id = "ccc9b69099654cbfa61847cf047353be"
